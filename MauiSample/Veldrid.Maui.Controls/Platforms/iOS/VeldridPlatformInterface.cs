@@ -53,7 +53,7 @@ namespace Veldrid.Maui.Controls.Platforms.iOS
             {
                 _timer.PreferredFrameRateRange = CAFrameRateRange.Default;
             }
-            _timer.AddToRunLoop(NSRunLoop.Main, NSRunLoopMode.Default);
+            _timer.AddToRunLoop(NSRunLoop.Main, NSRunLoopMode.Default);//UI线程
         }
 
         private void RenderLoop()

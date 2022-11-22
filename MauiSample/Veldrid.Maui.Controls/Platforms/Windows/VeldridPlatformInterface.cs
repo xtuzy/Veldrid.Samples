@@ -20,7 +20,7 @@ namespace MauiGPUControl.Platforms.Windows
             _view.CompositionScaleChanged += OnViewScaleChanged;
             _view.SizeChanged += OnViewSizeChanged;
 
-            CompositionTarget.Rendering += RenderLoop;
+            CompositionTarget.Rendering += RenderLoop;//UI Thread
 
             _view.Loaded += OnLoaded;
             _view.Unloaded += OnUnloaded;
