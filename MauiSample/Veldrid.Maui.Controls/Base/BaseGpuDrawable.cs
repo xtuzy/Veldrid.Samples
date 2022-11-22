@@ -24,25 +24,26 @@ namespace Veldrid.Maui.Controls.Base
         public virtual void TryAddTo(BaseVeldridPlatformInterface platformInterface)
         {
             PlatformInterface = platformInterface;
-            platformInterface.Resized += this.OnViewResize;
-            platformInterface.GraphicsDeviceCreated += this.OnGraphicsDeviceCreated;
-            platformInterface.GraphicsDeviceDestroyed += this.OnGraphicsDeviceDestroyed;
-            platformInterface.Rendering += this.OnRender;
             _camera = new Camera(PlatformInterface.Width, PlatformInterface.Height);
 
             if (GraphicsDevice != null)
             {
                 OnGraphicsDeviceCreated();
             }
+
+            platformInterface.GraphicsDeviceCreated += this.OnGraphicsDeviceCreated;
+            platformInterface.Resized += this.OnViewResize;
+            platformInterface.GraphicsDeviceDestroyed += this.OnGraphicsDeviceDestroyed;
+            platformInterface.Rendering += this.OnRender;//渲染需要放最后, 因为一连上就会执行
         }
 
         public virtual void TryRemoveFrom(BaseVeldridPlatformInterface platformInterface)
         {
+            platformInterface.Rendering -= this.OnRender;//先和渲染循环断开
+            PlatformInterface = null;
             platformInterface.Resized -= this.OnViewResize;
             platformInterface.GraphicsDeviceCreated -= this.OnGraphicsDeviceCreated;
             platformInterface.GraphicsDeviceDestroyed -= this.OnGraphicsDeviceDestroyed;
-            platformInterface.Rendering -= this.OnRender;
-            PlatformInterface = null;
         }
 
         /// <summary>
