@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\MauiSample\Veldrid.Maui.Samples\GettingStarted.cs" Link="GettingStarted.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MauiSample\Veldrid.Maui.Controls\Veldrid.Maui.Controls.csproj" />
+    <ProjectReference Include="..\MauiSample\Veldrid.Maui.Samples.Core\Veldrid.Maui.Samples.Core.csproj" />
+    <PackageReference Include="Veldrid.Maui.NativeLibraryLoader" Version="1.0.13" />
+    <PackageReference Include="Veldrid.Maui.Utilities" Version="4.9.0-beta3" />
+    <PackageReference Include="Veldrid.Maui" Version="4.9.0-beta3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="VeldridPlatformInterface.cs">
+      <ExcludeFromCurrentConfiguration>true</ExcludeFromCurrentConfiguration>
+    </Compile>
+    <Compile Update="VeldridPlatformView.cs">
+      <ExcludeFromCurrentConfiguration>true</ExcludeFromCurrentConfiguration>
+    </Compile>
+  </ItemGroup>
+
+</Project>

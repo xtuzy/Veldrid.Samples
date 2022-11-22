@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33103.201
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Veldrid.macOS.Samples", "Veldrid.macOS.Samples\Veldrid.macOS.Samples.csproj", "{1EA8CF18-E122-40EA-B3BF-12ED321755AF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1EA8CF18-E122-40EA-B3BF-12ED321755AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EA8CF18-E122-40EA-B3BF-12ED321755AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EA8CF18-E122-40EA-B3BF-12ED321755AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EA8CF18-E122-40EA-B3BF-12ED321755AF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EF4B1875-8ECC-4AC6-842C-E9A1EA95BFD2}
+	EndGlobalSection
+EndGlobal

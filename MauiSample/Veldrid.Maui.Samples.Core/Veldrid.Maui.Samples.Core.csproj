@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net6.0;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net6.0-android</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Shaders\**">
+      <LogicalName>%(FileName)%(Extension)</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Instancing\Shaders\**">
+      <LogicalName>%(FileName)%(Extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Instancing\ProcessedAssets\*.binary">
+      <LogicalName>%(FileName)%(Extension)</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Offscreen\Shaders\**">
+      <LogicalName>%(FileName)%(Extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Offscreen\Assets\**">
+      <LogicalName>%(FileName)%(Extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Offscreen\ProcessedAssets\*.binary">
+      <LogicalName>%(FileName)%(Extension)</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="AnimatedMesh\Assets\**">
+      <LogicalName>%(FileName)%(Extension)</LogicalName>
+    </EmbeddedResource>
+    <!--<EmbeddedResource Include="AnimatedMesh\ProcessedAssets\*.binary">
+      <LogicalName>%(FileName)%(Extension)</LogicalName>
+    </EmbeddedResource>-->
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Veldrid.Maui.SPIRV" Version="1.0.16" />
+
+    <ProjectReference Include="..\Veldrid.Maui.Controls\Veldrid.Maui.Controls.csproj" />
+    <PackageReference Include="AssimpNet" Version="4.1.0" Condition="$(TargetFramework.Contains('android')) == false" />
+    <PackageReference Include="AssimpNet.Mobile.Native.Android" Version="5.1.0" Condition="$(TargetFramework.Contains('android')) == true" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33103.201
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veldrid.macOS.Samples", "Veldrid.macOS.Samples\Veldrid.macOS.Samples\Veldrid.macOS.Samples.csproj", "{1EA8CF18-E122-40EA-B3BF-12ED321755AF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MauiSample", "MauiSample", "{3831AFCB-6DBE-4643-880B-AAB6DE4B4403}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veldrid.Maui.Controls", "MauiSample\Veldrid.Maui.Controls\Veldrid.Maui.Controls.csproj", "{7399DAC5-72C2-47CE-9037-17EA1AAAA90B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veldrid.Maui.Samples.Core", "MauiSample\Veldrid.Maui.Samples.Core\Veldrid.Maui.Samples.Core.csproj", "{733290E4-98A6-4D0D-901E-CC46CD3F4BC6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veldrid.Maui.Samples", "MauiSample\Veldrid.Maui.Samples\Veldrid.Maui.Samples.csproj", "{1425EA5B-6C92-41A4-B3C7-ED6B9F784DC0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veldrid.Wpf.Samples", "Veldrid.Wpf.Samples\Veldrid.Wpf.Samples.csproj", "{82978DDB-012F-4FCA-B43D-28DEFBE822AA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1EA8CF18-E122-40EA-B3BF-12ED321755AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EA8CF18-E122-40EA-B3BF-12ED321755AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EA8CF18-E122-40EA-B3BF-12ED321755AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EA8CF18-E122-40EA-B3BF-12ED321755AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7399DAC5-72C2-47CE-9037-17EA1AAAA90B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7399DAC5-72C2-47CE-9037-17EA1AAAA90B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7399DAC5-72C2-47CE-9037-17EA1AAAA90B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7399DAC5-72C2-47CE-9037-17EA1AAAA90B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{733290E4-98A6-4D0D-901E-CC46CD3F4BC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{733290E4-98A6-4D0D-901E-CC46CD3F4BC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{733290E4-98A6-4D0D-901E-CC46CD3F4BC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{733290E4-98A6-4D0D-901E-CC46CD3F4BC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1425EA5B-6C92-41A4-B3C7-ED6B9F784DC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1425EA5B-6C92-41A4-B3C7-ED6B9F784DC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1425EA5B-6C92-41A4-B3C7-ED6B9F784DC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1425EA5B-6C92-41A4-B3C7-ED6B9F784DC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1425EA5B-6C92-41A4-B3C7-ED6B9F784DC0}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{82978DDB-012F-4FCA-B43D-28DEFBE822AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82978DDB-012F-4FCA-B43D-28DEFBE822AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82978DDB-012F-4FCA-B43D-28DEFBE822AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82978DDB-012F-4FCA-B43D-28DEFBE822AA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7399DAC5-72C2-47CE-9037-17EA1AAAA90B} = {3831AFCB-6DBE-4643-880B-AAB6DE4B4403}
+		{733290E4-98A6-4D0D-901E-CC46CD3F4BC6} = {3831AFCB-6DBE-4643-880B-AAB6DE4B4403}
+		{1425EA5B-6C92-41A4-B3C7-ED6B9F784DC0} = {3831AFCB-6DBE-4643-880B-AAB6DE4B4403}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EF4B1875-8ECC-4AC6-842C-E9A1EA95BFD2}
+	EndGlobalSection
+EndGlobal

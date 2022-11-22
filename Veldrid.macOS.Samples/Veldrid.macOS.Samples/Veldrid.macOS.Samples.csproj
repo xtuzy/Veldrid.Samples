@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net7.0-macos</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>true</ImplicitUsings>
+    <SupportedOSPlatformVersion>10.14</SupportedOSPlatformVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Veldrid.Maui.NativeLibraryLoader" Version="1.0.13" />
+    <PackageReference Include="Veldrid.Maui.Utilities" Version="4.9.0-beta3" />
+    <PackageReference Include="Veldrid.Maui" Version="4.9.0-beta3" />
+  </ItemGroup>
+</Project>
