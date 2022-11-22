@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net7.0-macos</TargetFramework>
     <OutputType>Exe</OutputType>
@@ -7,8 +7,24 @@
     <SupportedOSPlatformVersion>10.14</SupportedOSPlatformVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\..\MauiSample\Veldrid.Maui.Samples\GettingStarted.cs" Link="GettingStarted.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Veldrid.Maui.SPIRV" Version="1.0.16" />
     <PackageReference Include="Veldrid.Maui.NativeLibraryLoader" Version="1.0.13" />
     <PackageReference Include="Veldrid.Maui.Utilities" Version="4.9.0-beta3" />
     <PackageReference Include="Veldrid.Maui" Version="4.9.0-beta3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MauiSample\Veldrid.Maui.Controls\Veldrid.Maui.Controls.csproj" />
+    <ProjectReference Include="..\..\MauiSample\Veldrid.Maui.Samples.Core\Veldrid.Maui.Samples.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="VeldridPlatformInterface.cs">
+      <ExcludeFromCurrentConfiguration>true</ExcludeFromCurrentConfiguration>
+    </Compile>
+    <Compile Update="VeldridPlatformView.cs">
+      <ExcludeFromCurrentConfiguration>true</ExcludeFromCurrentConfiguration>
+    </Compile>
   </ItemGroup>
 </Project>

@@ -2,6 +2,6 @@ using Veldrid.macOS.Samples;
 
 // This is the main entry point of the application.
 NSApplication.Init();
-AppGlobals.InitDevice();
+//AppGlobals.InitDevice();
 NSApplication.Main(args);
-AppGlobals.DisposeDevice();
+//AppGlobals.DisposeDevice();
