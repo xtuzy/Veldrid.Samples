@@ -157,7 +157,7 @@ namespace Veldrid.Maui.Samples.Core.ComputeTexture
         protected override void Draw(float deltaSeconds)
         {
             _cl.Begin();
-            _ticks += deltaSeconds * 1000f;
+            _ticks += deltaSeconds;// * 1000f;
             Vector4 shifts = new Vector4(
                 PlatformInterface.Width * (float)Math.Cos(_ticks / 500f), // Red shift
                 PlatformInterface.Height * (float)Math.Sin(_ticks / 1250f), // Green shift

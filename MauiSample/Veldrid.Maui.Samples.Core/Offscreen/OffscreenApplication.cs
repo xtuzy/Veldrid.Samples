@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Numerics;
-using Veldrid;
+﻿using System.Numerics;
 using Veldrid.Maui.Controls.Base;
 using Veldrid.SPIRV;
 
@@ -164,7 +161,7 @@ namespace Veldrid.Maui.Samples.Core.Offscreen
 
         protected override void Draw(float deltaSeconds)
         {
-            _dragonRotation.Y += deltaSeconds * 10f;
+            _dragonRotation.Y += deltaSeconds / 1000 * 10f;
 
             UpdateUniformBuffers();
             UpdateUniformBufferOffscreen();

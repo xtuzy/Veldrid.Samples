@@ -46,8 +46,9 @@ namespace Veldrid.Maui.Samples.Core.Instancing
 
         protected override void CreateResources(ResourceFactory factory)
         {
+            //实列数目
             _instanceCount = 8000u;
-
+            //相机设置
             _camera.Position = new Vector3(-36f, 20f, 100f);
             _camera.Pitch = -0.3f;
             _camera.Yaw = 0.1f;
@@ -240,8 +241,8 @@ namespace Veldrid.Maui.Samples.Core.Instancing
                 _commandList.UpdateBuffer(_lightInfoBuffer, 0, new LightInfo(_lightDir, _camera.Position));
             }
 
-            _localRotation += delta * ((float)Math.PI * 2 / 9);
-            _globalRotation += -delta * ((float)Math.PI * 2 / 240);
+            _localRotation += delta/1000 * ((float)Math.PI * 2 / 9);
+            _globalRotation += -delta/1000 * ((float)Math.PI * 2 / 240);
             _commandList.UpdateBuffer(_rotationInfoBuffer, 0, new Vector4(_localRotation, _globalRotation, 0, 0));
 
             Matrix4x4.Invert(_camera.ProjectionMatrix, out Matrix4x4 inverseProjection);

@@ -164,7 +164,7 @@ namespace Veldrid.Maui.Samples.Core.AnimatedMesh
 
         protected override void Draw(float deltaSeconds)
         {
-            UpdateAnimation(deltaSeconds);
+            UpdateAnimation(deltaSeconds / 1000);
             UpdateUniforms();
             _cl.Begin();
             _cl.SetFramebuffer(MainSwapchain.Framebuffer);
