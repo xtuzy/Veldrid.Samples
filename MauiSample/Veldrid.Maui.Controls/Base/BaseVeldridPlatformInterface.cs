@@ -35,7 +35,7 @@ namespace Veldrid.Maui.Controls.Base
         public event Action Resized;
 
         //event Action<KeyEvent> KeyPressed;
-        public void InvokeRendering(float delt) => Rendering?.Invoke(delt);
+        public void InvokeRendering(float deltaMilliseconds) => Rendering?.Invoke(deltaMilliseconds);
         public void InvokeGraphicsDeviceCreated() => GraphicsDeviceCreated?.Invoke();
         public void InvokeGraphicsDeviceDestroyed() => GraphicsDeviceDestroyed?.Invoke();
         public void InvokeResized() => Resized?.Invoke();

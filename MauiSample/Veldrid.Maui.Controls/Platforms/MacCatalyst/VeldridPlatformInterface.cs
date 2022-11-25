@@ -63,7 +63,7 @@ namespace Veldrid.Maui.Controls.Platforms.iOS
             {
                 try
                 {
-                    InvokeRendering(elapsed);
+                    InvokeRendering(elapsed * 1000);
                 }
                 catch (Exception e)
                 {
