@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Shaders\**">
+    <EmbeddedResource Include="ComputeParticles\Shaders\**">
       <LogicalName>%(FileName)%(Extension)</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
