@@ -5,9 +5,8 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using Veldrid;
 
-namespace Veldrid.Maui.Controls.Base
+namespace Veldrid.Maui.Controls.AssetPrimitives
 {
     // A hand-crafted KTX file parser.
     // https://www.khronos.org/opengles/sdk/tools/KTX/file_format_spec
@@ -69,9 +68,9 @@ namespace Veldrid.Maui.Controls.Base
                 KtxMipmapLevel[] images = new KtxMipmapLevel[numberOfMipmapLevels];
                 for (int mip = 0; mip < numberOfMipmapLevels; mip++)
                 {
-                    uint mipWidth = Math.Max(1, baseWidth / (uint)(Math.Pow(2, mip)));
-                    uint mipHeight = Math.Max(1, baseHeight / (uint)(Math.Pow(2, mip)));
-                    uint mipDepth = Math.Max(1, baseDepth / (uint)(Math.Pow(2, mip)));
+                    uint mipWidth = Math.Max(1, baseWidth / (uint)Math.Pow(2, mip));
+                    uint mipHeight = Math.Max(1, baseHeight / (uint)Math.Pow(2, mip));
+                    uint mipDepth = Math.Max(1, baseDepth / (uint)Math.Pow(2, mip));
 
                     uint imageSize = br.ReadUInt32();
                     uint arrayElementSize = imageSize / numberOfArrayElements;
@@ -96,7 +95,7 @@ namespace Veldrid.Maui.Controls.Base
                         arrayElementSize,
                         arrayElements);
 
-                    uint mipPaddingBytes = 3 - ((imageSize + 3) % 4);
+                    uint mipPaddingBytes = 3 - (imageSize + 3) % 4;
                     br.BaseStream.Seek(mipPaddingBytes, SeekOrigin.Current);
                 }
 
@@ -109,7 +108,7 @@ namespace Veldrid.Maui.Controls.Base
             uint keyAndValueByteSize = br.ReadUInt32();
             byte* keyAndValueBytes = stackalloc byte[(int)keyAndValueByteSize];
             ReadBytes(br, keyAndValueBytes, (int)keyAndValueByteSize);
-            int paddingByteCount = (int)(3 - ((keyAndValueByteSize + 3) % 4));
+            int paddingByteCount = (int)(3 - (keyAndValueByteSize + 3) % 4);
             br.BaseStream.Seek(paddingByteCount, SeekOrigin.Current); // Skip padding bytes
 
             // Find the key's null terminator

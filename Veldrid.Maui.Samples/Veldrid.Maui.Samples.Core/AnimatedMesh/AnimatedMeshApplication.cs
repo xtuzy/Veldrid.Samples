@@ -6,11 +6,14 @@ using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Veldrid;
+using Veldrid.Maui.Controls.AssetPrimitives;
 using Veldrid.Maui.Controls.Base;
 using Veldrid.SPIRV;
 using aiMatrix4x4 = Assimp.Matrix4x4;
 using aiQuaternion = Assimp.Quaternion;
 using Matrix4x4 = System.Numerics.Matrix4x4;
+using QuaternionKey = Assimp.QuaternionKey;
+using VectorKey = Assimp.VectorKey;
 
 namespace Veldrid.Maui.Samples.Core.AnimatedMesh
 {

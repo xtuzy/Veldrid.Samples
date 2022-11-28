@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using Veldrid.Maui.Controls.AssetPrimitives;
 using Veldrid.Maui.Controls.Base;
 using Veldrid.SPIRV;
 
