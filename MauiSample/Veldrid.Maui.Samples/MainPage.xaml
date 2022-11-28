@@ -17,6 +17,14 @@
             Orientation="Horizontal" />
         <Grid Grid.Row="1" BackgroundColor="Yellow">
             <Grid x:Name="veldridContainer" IsClippedToBounds="True" />
+            <Label
+                FontAttributes="Bold"
+                FontSize="Large"
+                HorizontalOptions="Center"
+                Text="Hello World!"
+                TextColor="Red"
+                VerticalOptions="Center" />
         </Grid>
+
     </Grid>
 </ContentPage>
