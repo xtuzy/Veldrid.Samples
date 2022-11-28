@@ -153,7 +153,7 @@ void main()
 
     struct VertexPositionColor
     {
-        public const uint SizeInBytes = 24;
+        public const uint SizeInBytes = 24;//float is 32bit, so it is 4 bytes; then RgbaFloat is 16 bytes,Vector2 is 8 bytes
         public Vector2 Position;
         public RgbaFloat Color;
         public VertexPositionColor(Vector2 position, RgbaFloat color)
