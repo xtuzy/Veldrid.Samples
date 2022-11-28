@@ -16,7 +16,7 @@ namespace Veldrid.Wpf.Samples
                 Children =
                 {
                     new Button(){ Content = nameof(Veldrid.Maui.Samples.GettingStartedApplication)},
-                    new Button(){ Content =nameof(Veldrid.Maui.Samples.Core.ComputeTexture.ComputeTextureApplication)},
+                    new Button(){ Content = nameof(Veldrid.Maui.Samples.Core.ComputeTexture.ComputeTextureApplication)},
                     new Button(){ Content = nameof(Veldrid.Maui.Samples.Core.AnimatedMesh.AnimatedMeshApplication)},
                     new Button(){ Content = nameof(Veldrid.Maui.Samples.Core.ComputeParticles.ComputeParticlesApplication)},
                     new Button(){ Content = nameof(Veldrid.Maui.Samples.Core.Instancing.InstancingApplication)},
