@@ -43,12 +43,21 @@
       <LogicalName>%(FileName)%(Extension)</LogicalName>
     </EmbeddedResource>-->
   </ItemGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="Veldrid.Maui.SPIRV" Version="1.0.16" />
 
     <ProjectReference Include="..\Veldrid.Maui.Controls\Veldrid.Maui.Controls.csproj" />
     <PackageReference Include="AssimpNet" Version="4.1.0" Condition="$(TargetFramework.Contains('android')) == false" />
     <PackageReference Include="AssimpNet.Mobile.Native.Android" Version="5.1.0" Condition="$(TargetFramework.Contains('android')) == true" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="TexturedCube\Assets\**">
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="TexturedCube\Assets\Shaders\vert.glsl" />
   </ItemGroup>
 </Project>

@@ -21,6 +21,7 @@ namespace Veldrid.Wpf.Samples
                     new Button(){ Content = nameof(Veldrid.Maui.Samples.Core.ComputeParticles.ComputeParticlesApplication)},
                     new Button(){ Content = nameof(Veldrid.Maui.Samples.Core.Instancing.InstancingApplication)},
                     new Button(){ Content = nameof(Veldrid.Maui.Samples.Core.Offscreen.OffscreenApplication)},
+                    new Button(){ Content = nameof(Veldrid.Maui.Samples.Core.TexturedCube.TexturedCubeDrawable)},
                 }
             };
             var platformView = new VeldridPlatformView();
@@ -44,6 +45,8 @@ namespace Veldrid.Wpf.Samples
                             platformInterface.Drawable = new Veldrid.Maui.Samples.Core.Instancing.InstancingApplication();
                         else if (button.Content == nameof(Veldrid.Maui.Samples.Core.Offscreen.OffscreenApplication))
                             platformInterface.Drawable = new Veldrid.Maui.Samples.Core.Offscreen.OffscreenApplication();
+                        else if (button.Content == nameof(Veldrid.Maui.Samples.Core.TexturedCube.TexturedCubeDrawable))
+                            platformInterface.Drawable = new Veldrid.Maui.Samples.Core.TexturedCube.TexturedCubeDrawable();
                     };
                 }
             }

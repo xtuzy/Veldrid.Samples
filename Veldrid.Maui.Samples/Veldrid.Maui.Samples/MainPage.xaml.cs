@@ -65,6 +65,7 @@ namespace Veldrid.Maui.Samples
                     new Button(){ Text = nameof(Veldrid.Maui.Samples.Core.ComputeParticles.ComputeParticlesApplication)},
                     new Button(){ Text = nameof(Veldrid.Maui.Samples.Core.Instancing.InstancingApplication)},
                     new Button(){ Text = nameof(Veldrid.Maui.Samples.Core.Offscreen.OffscreenApplication)},
+                    new Button(){ Text = nameof(Veldrid.Maui.Samples.Core.TexturedCube.TexturedCubeDrawable)},
                     new Button(){ Text = "Remove"},
                 }
             };
@@ -88,6 +89,8 @@ namespace Veldrid.Maui.Samples
                             platformView.Drawable = new Veldrid.Maui.Samples.Core.Instancing.InstancingApplication();
                         else if (button.Text == nameof(Veldrid.Maui.Samples.Core.Offscreen.OffscreenApplication))
                             platformView.Drawable = new Veldrid.Maui.Samples.Core.Offscreen.OffscreenApplication();
+                        else if (button.Text == nameof(Veldrid.Maui.Samples.Core.TexturedCube.TexturedCubeDrawable))
+                            platformView.Drawable = new Veldrid.Maui.Samples.Core.TexturedCube.TexturedCubeDrawable();
                         else if (button.Text == "Remove")
                             platformView.Drawable = null;
                     };
