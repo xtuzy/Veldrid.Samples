@@ -17,7 +17,7 @@ namespace Veldrid.Maui.Controls.AssetProcessor
     {
         public unsafe override ProcessedTexture ProcessT(Stream stream, string extension)
         {
-            int formatSize = 32;//4 * 8=32
+            int formatSize = 4;
             var image = new UIImage(NSData.FromStream(stream));
             Image[] mipmaps = GenerateMipmaps(image, formatSize, out int totalSize);
 
