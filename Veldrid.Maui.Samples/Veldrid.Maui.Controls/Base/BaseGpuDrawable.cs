@@ -7,15 +7,16 @@ namespace Veldrid.Maui.Controls.Base
     {
         private readonly Dictionary<Type, BinaryAssetSerializer> _serializers = DefaultSerializers.Get();
 
-        protected Camera _camera;
+        protected BaseCamera _camera;
 
         public BaseVeldridPlatformInterface PlatformInterface { get; private set; }
         public GraphicsDevice GraphicsDevice => PlatformInterface?._graphicsDevice;
         public ResourceFactory ResourceFactory => PlatformInterface?._resources;
         public Swapchain MainSwapchain => PlatformInterface?._swapChain;
 
-        public BaseGpuDrawable()
+        public BaseGpuDrawable(BaseCamera camera = null)
         {
+            _camera = camera;
         }
 
         /// <summary>
@@ -24,7 +25,10 @@ namespace Veldrid.Maui.Controls.Base
         public virtual void TryAddTo(BaseVeldridPlatformInterface platformInterface)
         {
             PlatformInterface = platformInterface;
-            _camera = new Camera(PlatformInterface.Width, PlatformInterface.Height);
+            if (_camera != null)
+            {
+                _camera.WindowResized(PlatformInterface.Width, PlatformInterface.Height);
+            }
 
             if (GraphicsDevice != null)
             {
@@ -79,14 +83,16 @@ namespace Veldrid.Maui.Controls.Base
         }
         protected void PreDraw(float deltaSeconds)
         {
-            _camera.Update(deltaSeconds);
+            if(_camera != null)
+                _camera.Update(deltaSeconds);
         }
 
         protected abstract void Draw(float deltaSeconds);
 
         protected virtual void OnViewResize()
         {
-            _camera.WindowResized(PlatformInterface.Width, PlatformInterface.Height);
+            if (_camera != null)
+                _camera.WindowResized(PlatformInterface.Width, PlatformInterface.Height);
         }
 
         //protected virtual void OnKeyDown(KeyEvent ke) { }

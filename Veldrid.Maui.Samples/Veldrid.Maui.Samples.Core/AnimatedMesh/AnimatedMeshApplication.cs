@@ -41,7 +41,7 @@ namespace Veldrid.Maui.Samples.Core.AnimatedMesh
         private aiMatrix4x4[] _boneTransformations;
         private float _animationTimeScale = 1f;
 
-        public AnimatedMeshApplication(){ }
+        public AnimatedMeshApplication(BaseCamera camera):base(camera){ }
 
         private static string GetAssetPath(string relativeAssetPath)
         {

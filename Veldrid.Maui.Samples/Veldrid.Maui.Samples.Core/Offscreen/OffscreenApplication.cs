@@ -32,7 +32,7 @@ namespace Veldrid.Maui.Samples.Core.Offscreen
         private ResourceSet _dragonResourceSet;
         private ResourceSet _mirrorResourceSet;
 
-        public OffscreenApplication()
+        public OffscreenApplication(BaseCamera camera):base(camera)
         {
         }
 

@@ -5,7 +5,7 @@ using Veldrid;
 
 namespace Veldrid.Maui.Controls.Base
 {
-    public class Camera
+    public abstract class BaseCamera
     {
         private float _fov = 1f;
         private float _near = 1f;
@@ -21,14 +21,18 @@ namespace Veldrid.Maui.Controls.Base
         private float _yaw;
         private float _pitch;
 
-        private Vector2 _previousMousePos;
-        private float _windowWidth;
-        private float _windowHeight;
+        internal float _windowWidth;
+        internal float _windowHeight;
 
         public event Action<Matrix4x4> ProjectionChanged;
         public event Action<Matrix4x4> ViewChanged;
 
-        public Camera(float width, float height)
+        public BaseCamera(): this(0, 0)
+        {
+            
+        }
+
+        public BaseCamera(float width, float height)
         {
             _windowWidth = width;
             _windowHeight = height;
@@ -53,61 +57,9 @@ namespace Veldrid.Maui.Controls.Base
         public float MoveSpeed { get => _moveSpeed; set => _moveSpeed = value; }
         public Vector3 Forward => GetLookDir();
 
-        public void Update(float deltaSeconds)
-        {
-            /*float sprintFactor = InputTracker.GetKey(Key.ControlLeft)
-                ? 0.1f
-                : InputTracker.GetKey(Key.ShiftLeft)
-                    ? 2.5f
-                    : 1f;
-            Vector3 motionDir = Vector3.Zero;
-            if (InputTracker.GetKey(Key.A))
-            {
-                motionDir += -Vector3.UnitX;
-            }
-            if (InputTracker.GetKey(Key.D))
-            {
-                motionDir += Vector3.UnitX;
-            }
-            if (InputTracker.GetKey(Key.W))
-            {
-                motionDir += -Vector3.UnitZ;
-            }
-            if (InputTracker.GetKey(Key.S))
-            {
-                motionDir += Vector3.UnitZ;
-            }
-            if (InputTracker.GetKey(Key.Q))
-            {
-                motionDir += -Vector3.UnitY;
-            }
-            if (InputTracker.GetKey(Key.E))
-            {
-                motionDir += Vector3.UnitY;
-            }
+        public abstract void Update(float deltaSeconds);
 
-            if (motionDir != Vector3.Zero)
-            {
-                Quaternion lookRotation = Quaternion.CreateFromYawPitchRoll(Yaw, Pitch, 0f);
-                motionDir = Vector3.Transform(motionDir, lookRotation);
-                _position += motionDir * MoveSpeed * sprintFactor * deltaSeconds;
-                UpdateViewMatrix();
-            }
-
-            Vector2 mouseDelta = InputTracker.MousePosition - _previousMousePos;
-            _previousMousePos = InputTracker.MousePosition;
-
-            if (InputTracker.GetMouseButton(MouseButton.Left) || InputTracker.GetMouseButton(MouseButton.Right))
-            {
-                Yaw += -mouseDelta.X * 0.01f;
-                Pitch += -mouseDelta.Y * 0.01f;
-                Pitch = Clamp(Pitch, -1.55f, 1.55f);
-
-                UpdateViewMatrix();
-            }*/
-        }
-
-        private float Clamp(float value, float min, float max)
+        protected float Clamp(float value, float min, float max)
         {
             return value > max
                 ? max
@@ -129,7 +81,7 @@ namespace Veldrid.Maui.Controls.Base
             ProjectionChanged?.Invoke(_projectionMatrix);
         }
 
-        private void UpdateViewMatrix()
+        protected void UpdateViewMatrix()
         {
             Vector3 lookDir = GetLookDir();
             _lookDirection = lookDir;

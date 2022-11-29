@@ -42,7 +42,7 @@ namespace Veldrid.Maui.Samples.Core.Instancing
         private float _localRotation = 0f; // Causes individual rocks to rotate around their centers
         private float _globalRotation = 0f; // Causes rocks to rotate around the global origin (where the planet is)
 
-        public InstancingApplication() { }
+        public InstancingApplication(BaseCamera camera):base(camera) { }
 
         protected override void CreateResources(ResourceFactory factory)
         {
