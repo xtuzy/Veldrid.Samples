@@ -101,7 +101,8 @@ namespace Veldrid.Maui.Samples.Core.TexturedCube
                 worldTextureLayout,
                 _worldBuffer,
                 _surfaceTextureView,
-                GraphicsDevice.Aniso4xSampler));
+                GraphicsDevice.LinearSampler));
+                //GraphicsDevice.Aniso4xSampler));//On Android throw not support
 
             _cl = factory.CreateCommandList();
         }
