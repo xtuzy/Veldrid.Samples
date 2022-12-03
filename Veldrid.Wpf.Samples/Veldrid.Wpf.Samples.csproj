@@ -14,9 +14,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Veldrid.Maui.Samples\Veldrid.Maui.Controls\Veldrid.Maui.Controls.csproj" />
     <ProjectReference Include="..\Veldrid.Maui.Samples\Veldrid.Maui.Samples.Core\Veldrid.Maui.Samples.Core.csproj" />
-    <PackageReference Include="Veldrid.Maui.NativeLibraryLoader" Version="1.0.13" />
-    <PackageReference Include="Veldrid.Maui.Utilities" Version="4.9.0-beta3" />
-    <PackageReference Include="Veldrid.Maui" Version="4.9.0-beta3" />
+    <PackageReference Include="NativeLibraryLoader" Version="1.0.13" />
+    <PackageReference Include="Veldrid.Utilities" Version="4.9.0-beta3" />
+    <PackageReference Include="Veldrid" Version="4.9.0-beta3" />
   </ItemGroup>
 
   <ItemGroup>

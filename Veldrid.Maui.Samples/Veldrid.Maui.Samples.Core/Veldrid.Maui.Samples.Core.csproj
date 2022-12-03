@@ -45,7 +45,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Veldrid.Maui.SPIRV" Version="1.0.16" />
+    <PackageReference Include="Veldrid.SPIRV" Version="1.0.16" />
 
     <ProjectReference Include="..\Veldrid.Maui.Controls\Veldrid.Maui.Controls.csproj" />
     <PackageReference Include="AssimpNet" Version="4.1.0" Condition="$(TargetFramework.Contains('android')) == false" />
