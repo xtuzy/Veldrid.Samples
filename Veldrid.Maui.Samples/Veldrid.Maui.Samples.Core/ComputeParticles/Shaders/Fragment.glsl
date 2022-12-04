@@ -1,14 +1,9 @@
 #version 450
 
-layout(set = 0, binding = 0) uniform texture2D Tex;
-layout(set = 0, binding = 1) uniform texture2D Tex11;
-layout(set = 0, binding = 2) uniform texture2D Tex22;
-layout(set = 0, binding = 3) uniform sampler SS;
-
-layout(location = 0) in vec2 fsin_TexCoords;
-layout(location = 0) out vec4 OutColor;
+layout (location = 0) in vec4 fsin_color;
+layout (location = 0) out vec4 fsout_color;
 
 void main()
 {
-    OutColor = texture(sampler2D(Tex, SS), fsin_TexCoords) + texture(sampler2D(Tex11, SS), fsin_TexCoords) * .01 + texture(sampler2D(Tex22, SS), fsin_TexCoords) * .01;
+    fsout_color = fsin_color;
 }

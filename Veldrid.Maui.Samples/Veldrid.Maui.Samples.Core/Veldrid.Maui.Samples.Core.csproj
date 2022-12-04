@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="ComputeParticles\Shaders\**">
+    <EmbeddedResource Include="ComputeTexture\Shaders\**">
       <LogicalName>%(FileName)%(Extension)</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
@@ -56,8 +56,7 @@
     <EmbeddedResource Include="TexturedCube\Assets\**">
     </EmbeddedResource>
   </ItemGroup>
-
   <ItemGroup>
-    <None Remove="TexturedCube\Assets\Shaders\vert.glsl" />
+    <EmbeddedResource Include="ComputeParticles\Shaders\**" />
   </ItemGroup>
 </Project>

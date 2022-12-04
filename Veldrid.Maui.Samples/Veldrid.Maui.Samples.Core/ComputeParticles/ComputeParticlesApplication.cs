@@ -33,13 +33,13 @@ namespace Veldrid.Maui.Samples.Core.ComputeParticles
                 new BufferDescription(
                     (uint)Unsafe.SizeOf<ParticleInfo>() * ParticleCount,
                     BufferUsage.StructuredBufferReadWrite,
-                    (uint)Unsafe.SizeOf<ParticleInfo>()));
+                    (uint)Unsafe.SizeOf<ParticleInfo>(), true));
 
             _screenSizeBuffer = factory.CreateBuffer(new BufferDescription(16, BufferUsage.UniformBuffer));
 
             _computeShader = factory.CreateFromSpirv(new ShaderDescription(
                 ShaderStages.Compute,
-                ReadEmbeddedAssetBytes($"Compute.glsl"),
+                this.ReadEmbedAsset($"ComputeParticles.Shaders.Compute.glsl"),
                 "main"));
 
             ResourceLayout particleStorageLayout = factory.CreateResourceLayout(new ResourceLayoutDescription(
@@ -58,16 +58,16 @@ namespace Veldrid.Maui.Samples.Core.ComputeParticles
 
             _computeScreenSizeResourceSet = factory.CreateResourceSet(new ResourceSetDescription(screenSizeLayout, _screenSizeBuffer));
 
-            var result = SpirvCompilation.CompileVertexFragment(ReadEmbeddedAssetBytes($"Vertex.glsl"), ReadEmbeddedAssetBytes($"Fragment.glsl"), CrossCompileTarget.MSL);
+            var result = SpirvCompilation.CompileVertexFragment(this.ReadEmbedAsset($"ComputeParticles.Shaders.Vertex.glsl"), this.ReadEmbedAsset($"ComputeParticles.Shaders.Fragment.glsl"), CrossCompileTarget.MSL);
 
             var shaders = factory.CreateFromSpirv(
                 new ShaderDescription(
                     ShaderStages.Vertex,
-                    ReadEmbeddedAssetBytes($"Vertex.glsl"),
+                    this.ReadEmbedAsset($"ComputeParticles.Shaders.Vertex.glsl"),
                     "main"),
                 new ShaderDescription(
                     ShaderStages.Fragment,
-                    ReadEmbeddedAssetBytes($"Fragment.glsl"),
+                    this.ReadEmbedAsset($"ComputeParticles.Shaders.Fragment.glsl"),
                     "main"));
 
             ShaderSetDescription shaderSet = new ShaderSetDescription(

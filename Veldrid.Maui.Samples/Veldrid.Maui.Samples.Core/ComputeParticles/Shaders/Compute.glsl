@@ -1,28 +1,62 @@
 #version 450
 
-layout(set = 0, binding = 1) uniform ScreenSizeBuffer
+#define PARTICLE_COUNT 1024
+
+struct ParticleInfo
+{
+    vec2 Position;
+    vec2 Velocity;
+    vec4 Color;
+};
+
+layout(std140, set = 0, binding = 0) buffer ParticlesBuffer
+{
+    ParticleInfo Particles[];
+};
+
+layout(set = 1, binding = 0) uniform ScreenSizeBuffer
 {
     float ScreenWidth;
     float ScreenHeight;
     vec2 Padding_;
 };
 
-layout(set = 0, binding = 2) uniform ShiftBuffer
-{
-    float RShift;
-    float GShift;
-    float BShift;
-    float Padding1_;
-};
-
-layout(set = 0, binding = 0, rgba32f) uniform image2D Tex;
-
-layout(local_size_x = 16, local_size_y = 16, local_size_z = 1) in;
+layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 
 void main()
 {
-    float x = (gl_GlobalInvocationID.x + RShift);
-    float y = (gl_GlobalInvocationID.y + GShift);
+    uint index = gl_GlobalInvocationID.x;
+    if (index > PARTICLE_COUNT)
+    {
+        return;
+    }
 
-    imageStore(Tex, ivec2(gl_GlobalInvocationID.xy), vec4(x / ScreenWidth, y / ScreenHeight, BShift, 1));
+    vec2 pos = Particles[index].Position;
+    vec2 vel = Particles[index].Velocity;
+
+    vec2 newPos = pos + vel;
+    vec2 newVel = vel;
+    if (newPos.x > ScreenWidth)
+    {
+        newPos.x -= (newPos.x - ScreenWidth);
+        newVel.x *= -1;
+    }
+    if (newPos.x < 0)
+    {
+        newPos.x *= -1;
+        newVel.x *= -1;
+    }
+    if (newPos.y > ScreenHeight)
+    {
+        newPos.y -= (newPos.y - ScreenHeight);
+        newVel.y *= -1;
+    }
+    if (newPos.y < 0)
+    {
+        newPos.y = -newPos.y;
+        newVel.y *= -1;
+    }
+
+    Particles[index].Position = newPos;
+    Particles[index].Velocity = newVel;
 }
