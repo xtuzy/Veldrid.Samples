@@ -26,6 +26,7 @@ namespace Veldrid.Wpf.Samples
             };
             var platformView = new VeldridPlatformView();
             var platformInterface = new VeldridPlatformInterface(platformView);
+            var camera = new Maui.Controls.Base.SimpleCamera();
             foreach (var view in buttonContainer.Children)
             {
                 if (view is Button)
@@ -38,13 +39,13 @@ namespace Veldrid.Wpf.Samples
                         else if (button.Content == nameof(Veldrid.Maui.Samples.Core.ComputeTexture.ComputeTextureApplication))
                             platformInterface.Drawable = new Veldrid.Maui.Samples.Core.ComputeTexture.ComputeTextureApplication();
                         else if (button.Content == nameof(Veldrid.Maui.Samples.Core.AnimatedMesh.AnimatedMeshApplication))
-                            platformInterface.Drawable = new Veldrid.Maui.Samples.Core.AnimatedMesh.AnimatedMeshApplication();
+                            platformInterface.Drawable = new Veldrid.Maui.Samples.Core.AnimatedMesh.AnimatedMeshApplication(camera);
                         else if (button.Content == nameof(Veldrid.Maui.Samples.Core.ComputeParticles.ComputeParticlesApplication))
                             platformInterface.Drawable = new Veldrid.Maui.Samples.Core.ComputeParticles.ComputeParticlesApplication();//bug
                         else if (button.Content == nameof(Veldrid.Maui.Samples.Core.Instancing.InstancingApplication))
-                            platformInterface.Drawable = new Veldrid.Maui.Samples.Core.Instancing.InstancingApplication();
+                            platformInterface.Drawable = new Veldrid.Maui.Samples.Core.Instancing.InstancingApplication(camera);
                         else if (button.Content == nameof(Veldrid.Maui.Samples.Core.Offscreen.OffscreenApplication))
-                            platformInterface.Drawable = new Veldrid.Maui.Samples.Core.Offscreen.OffscreenApplication();
+                            platformInterface.Drawable = new Veldrid.Maui.Samples.Core.Offscreen.OffscreenApplication(camera);
                         else if (button.Content == nameof(Veldrid.Maui.Samples.Core.TexturedCube.TexturedCubeDrawable))
                             platformInterface.Drawable = new Veldrid.Maui.Samples.Core.TexturedCube.TexturedCubeDrawable();
                     };
