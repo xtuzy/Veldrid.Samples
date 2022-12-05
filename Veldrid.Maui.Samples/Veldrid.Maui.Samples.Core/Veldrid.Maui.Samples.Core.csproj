@@ -59,5 +59,6 @@
   <ItemGroup>
     <EmbeddedResource Include="ComputeParticles\Shaders\**" />
     <EmbeddedResource Include="GettingStarted\Assets\**" />
+    <EmbeddedResource Include="LearnOpenGL\Assets\**" />
   </ItemGroup>
 </Project>
