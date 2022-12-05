@@ -38,7 +38,6 @@ namespace Veldrid.Wpf.Samples
         /// </summary>
         private void CreateGraphicsDevice()
         {
-            _graphicsDevice = GraphicsDevice.CreateD3D11(new GraphicsDeviceOptions());
             double dpiScale = _view.CompositionScaleX;
             uint width = (uint)(_view.ActualWidth < 0 ? 0 : Math.Ceiling(_view.ActualWidth * dpiScale));
             uint height = (uint)(_view.ActualHeight < 0 ? 0 : Math.Ceiling(_view.ActualHeight * dpiScale));
@@ -48,7 +47,9 @@ namespace Veldrid.Wpf.Samples
             SwapchainSource win32Source = SwapchainSource.CreateWin32(_view.NativeHwnd, hinstance);
             SwapchainDescription scDesc = new SwapchainDescription(win32Source, width, height, PixelFormat.R32_Float, true);
 
-            _swapChain = _graphicsDevice.ResourceFactory.CreateSwapchain(scDesc);
+            _graphicsDevice = GraphicsDevice.CreateD3D11(new GraphicsDeviceOptions(), scDesc);
+            //_swapChain = _graphicsDevice.ResourceFactory.CreateSwapchain(scDesc);
+            _swapChain = _graphicsDevice.MainSwapchain;
 
             CompositionTarget.Rendering += RenderLoop;
 

@@ -102,10 +102,10 @@ namespace Veldrid.macOS.Samples
             SwapchainDescription scd = new SwapchainDescription(ss, (uint)_view.CorrectedFrame.Width, (uint)_view.CorrectedFrame.Height, null, true, true);
             if (_backend == GraphicsBackend.Metal)
             {
-                _graphicsDevice = GraphicsDevice.CreateMetal(_options);
-                _swapChain = _graphicsDevice.ResourceFactory.CreateSwapchain(ref scd);
-                //_graphicsDevice = GraphicsDevice.CreateMetal(_options, scd);
-                //_swapChain = _graphicsDevice.MainSwapchain;
+                //_graphicsDevice = GraphicsDevice.CreateMetal(_options);
+                //_swapChain = _graphicsDevice.ResourceFactory.CreateSwapchain(ref scd);
+                _graphicsDevice = GraphicsDevice.CreateMetal(_options, scd);
+                _swapChain = _graphicsDevice.MainSwapchain;
             }
             else if (_backend == GraphicsBackend.OpenGLES)
             {
