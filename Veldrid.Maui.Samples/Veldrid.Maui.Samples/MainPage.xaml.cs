@@ -55,7 +55,7 @@ namespace Veldrid.Maui.Samples
             {
                 Children =
                 {
-                    new Button(){ Text = nameof(Veldrid.Maui.Samples.GettingStartedApplication)},
+                    new Button(){ Text = nameof(Veldrid.Maui.Samples.Core.GettingStarted.GettingStartedDrawable)},
                     new Button(){ Text =nameof(Veldrid.Maui.Samples.Core.ComputeTexture.ComputeTextureApplication)},
                     new Button(){ Text = nameof(Veldrid.Maui.Samples.Core.AnimatedMesh.AnimatedMeshApplication)},
                     new Button(){ Text = nameof(Veldrid.Maui.Samples.Core.ComputeParticles.ComputeParticlesApplication)},
@@ -85,8 +85,8 @@ namespace Veldrid.Maui.Samples
                     var button = view as Button;
                     button.Clicked += (s, e) =>
                     {
-                        if (button.Text == nameof(Veldrid.Maui.Samples.GettingStartedApplication))
-                            platformView.Drawable = new Veldrid.Maui.Samples.GettingStartedApplication();
+                        if (button.Text == nameof(Veldrid.Maui.Samples.Core.GettingStarted.GettingStartedDrawable))
+                            platformView.Drawable = new Veldrid.Maui.Samples.Core.GettingStarted.GettingStartedDrawable();
                         else if (button.Text == nameof(Veldrid.Maui.Samples.Core.ComputeTexture.ComputeTextureApplication))
                             platformView.Drawable = new Veldrid.Maui.Samples.Core.ComputeTexture.ComputeTextureApplication();
                         else if (button.Text == nameof(Veldrid.Maui.Samples.Core.AnimatedMesh.AnimatedMeshApplication))

@@ -1,15 +1,19 @@
-﻿using System.Numerics;
+﻿using SharpText.Core;
+using SharpText.Veldrid;
+using System.IO;
+using System.Numerics;
 using System.Text;
 using Veldrid;
 using Veldrid.Maui.Controls.Base;
 using Veldrid.SPIRV;
 
-namespace Veldrid.Maui.Samples
+namespace Veldrid.Maui.Samples.Core.GettingStarted
 {
-    public class GettingStartedApplication : BaseGpuDrawable
+    public class GettingStartedDrawable : BaseGpuDrawable
     {
         private  GraphicsDevice _graphicsDevice  => GraphicsDevice;
         private  CommandList _commandList;
+        private VeldridTextRenderer textRender;
         private  DeviceBuffer _vertexBuffer;
         private  DeviceBuffer _indexBuffer;
         private  Shader[] _shaders;
@@ -39,7 +43,7 @@ void main()
 {
     fsout_Color = fsin_Color;
 }";
-        public GettingStartedApplication() { }
+        public GettingStartedDrawable() { }
 
         protected override void CreateResources(ResourceFactory factory)
         { 
@@ -101,16 +105,22 @@ void main()
             _pipeline = factory.CreateGraphicsPipeline(pipelineDescription);
 
             _commandList = factory.CreateCommandList();
+
+            var font = new Font(this.ReadEmbedAssetStream("GettingStarted.Assets.OpenSans-Regular.ttf"), 40);
+            textRender = new VeldridTextRenderer(GraphicsDevice, _commandList, font);
+            textRender.DrawText("Use SharpText.Veldrid Draw", new Vector2(20, 20), new Color(100, 0, 0, 1), 1);
         }
 
         protected override void Draw(float deltaSeconds)
         {
             // Begin() must be called before commands can be issued.
             _commandList.Begin();
-
+            
             // We want to render directly to the output window.
             _commandList.SetFramebuffer(MainSwapchain.Framebuffer);
             _commandList.ClearColorTarget(0, RgbaFloat.Black);
+
+            textRender.Draw();
 
             // Set all relevant state to draw our quad.
             _commandList.SetVertexBuffer(0, _vertexBuffer);
@@ -123,13 +133,19 @@ void main()
                 indexStart: 0,
                 vertexOffset: 0,
                 instanceStart: 0);
-
+            
             // End() must be called before commands can be submitted for execution.
             _commandList.End();
             _graphicsDevice?.SubmitCommands(_commandList);
 
             // Once commands have been submitted, the rendered image can be presented to the application window.
             _graphicsDevice?.SwapBuffers(MainSwapchain);
+        }
+
+        protected override void OnViewResize()
+        {
+            base.OnViewResize();
+            textRender.ResizeToSwapchain();
         }
 
         protected override void OnGraphicsDeviceDestroyed()

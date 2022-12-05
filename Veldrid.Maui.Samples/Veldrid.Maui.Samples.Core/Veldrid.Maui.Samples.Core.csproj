@@ -46,7 +46,7 @@
   
   <ItemGroup>
     <PackageReference Include="Veldrid.SPIRV" Version="1.0.16" />
-
+    <PackageReference Include="SharpText.Veldrid" Version="0.3.1" />
     <ProjectReference Include="..\Veldrid.Maui.Controls\Veldrid.Maui.Controls.csproj" />
     <PackageReference Include="AssimpNet" Version="4.1.0" Condition="$(TargetFramework.Contains('android')) == false" />
     <PackageReference Include="AssimpNet.Mobile.Native.Android" Version="5.1.0" Condition="$(TargetFramework.Contains('android')) == true" />
@@ -58,5 +58,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ComputeParticles\Shaders\**" />
+    <EmbeddedResource Include="GettingStarted\Assets\**" />
   </ItemGroup>
 </Project>

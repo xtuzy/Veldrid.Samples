@@ -6,9 +6,7 @@
     <ImplicitUsings>true</ImplicitUsings>
     <SupportedOSPlatformVersion>10.14</SupportedOSPlatformVersion>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="..\..\Veldrid.Maui.Samples\Veldrid.Maui.Samples\GettingStarted.cs" Link="GettingStarted.cs" />
-  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Veldrid.SPIRV" Version="1.0.16" />
     <PackageReference Include="NativeLibraryLoader" Version="1.0.13" />

@@ -1,5 +1,6 @@
 using CoreVideo;
 using ObjCRuntime;
+using Veldrid.Maui.Controls.Base;
 
 namespace Veldrid.macOS.Samples
 {
@@ -21,7 +22,7 @@ namespace Veldrid.macOS.Samples
             this.View = rootLayout;
             var buttonContainer = new NSStackView() { Orientation = NSUserInterfaceLayoutOrientation.Horizontal };
             rootLayout.AddView(buttonContainer, NSStackViewGravity.Center);
-            buttonContainer.AddView(new NSButton() { Title = nameof(Veldrid.Maui.Samples.GettingStartedApplication) }, NSStackViewGravity.Center);
+            buttonContainer.AddView(new NSButton() { Title = nameof(Veldrid.Maui.Samples.Core.GettingStarted.GettingStartedDrawable) }, NSStackViewGravity.Center);
             buttonContainer.AddView(new NSButton() { Title = nameof(Veldrid.Maui.Samples.Core.ComputeTexture.ComputeTextureApplication) }, NSStackViewGravity.Center);
             buttonContainer.AddView(new NSButton() { Title = nameof(Veldrid.Maui.Samples.Core.AnimatedMesh.AnimatedMeshApplication) }, NSStackViewGravity.Center);
             buttonContainer.AddView(new NSButton() { Title = nameof(Veldrid.Maui.Samples.Core.ComputeParticles.ComputeParticlesApplication) }, NSStackViewGravity.Center);
@@ -29,6 +30,7 @@ namespace Veldrid.macOS.Samples
             buttonContainer.AddView(new NSButton() { Title = nameof(Veldrid.Maui.Samples.Core.Offscreen.OffscreenApplication) }, NSStackViewGravity.Center);
             var platformView = new VeldridPlatformView();
             var platformInterface = new VeldridPlatformInterface(platformView, GraphicsBackend.OpenGL);
+            var camera = new SimpleCamera();
             foreach (var view in buttonContainer.Subviews)
             {
                 if (view is NSButton)
@@ -36,18 +38,18 @@ namespace Veldrid.macOS.Samples
                     var button = view as NSButton;
                     button.Activated += (s, e) =>
                     {
-                        if (button.Title == nameof(Veldrid.Maui.Samples.GettingStartedApplication))
-                            platformInterface.Drawable = new Veldrid.Maui.Samples.GettingStartedApplication();
+                        if (button.Title == nameof(Veldrid.Maui.Samples.Core.GettingStarted.GettingStartedDrawable))
+                            platformInterface.Drawable = new Veldrid.Maui.Samples.Core.GettingStarted.GettingStartedDrawable();
                         else if (button.Title == nameof(Veldrid.Maui.Samples.Core.ComputeTexture.ComputeTextureApplication))
                             platformInterface.Drawable = new Veldrid.Maui.Samples.Core.ComputeTexture.ComputeTextureApplication();
                         else if (button.Title == nameof(Veldrid.Maui.Samples.Core.AnimatedMesh.AnimatedMeshApplication))
-                            platformInterface.Drawable = new Veldrid.Maui.Samples.Core.AnimatedMesh.AnimatedMeshApplication();
+                            platformInterface.Drawable = new Veldrid.Maui.Samples.Core.AnimatedMesh.AnimatedMeshApplication(camera);
                         else if (button.Title == nameof(Veldrid.Maui.Samples.Core.ComputeParticles.ComputeParticlesApplication))
                             platformInterface.Drawable = new Veldrid.Maui.Samples.Core.ComputeParticles.ComputeParticlesApplication();//bug
                         else if (button.Title == nameof(Veldrid.Maui.Samples.Core.Instancing.InstancingApplication))
-                            platformInterface.Drawable = new Veldrid.Maui.Samples.Core.Instancing.InstancingApplication();
+                            platformInterface.Drawable = new Veldrid.Maui.Samples.Core.Instancing.InstancingApplication(camera);
                         else if (button.Title == nameof(Veldrid.Maui.Samples.Core.Offscreen.OffscreenApplication))
-                            platformInterface.Drawable = new Veldrid.Maui.Samples.Core.Offscreen.OffscreenApplication();
+                            platformInterface.Drawable = new Veldrid.Maui.Samples.Core.Offscreen.OffscreenApplication(camera);
                     };
                 }
             }
