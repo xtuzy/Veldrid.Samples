@@ -1,0 +1,1 @@
+﻿This project use official veldrid nuget packages, to verify my veldrid is same as official veldrid.

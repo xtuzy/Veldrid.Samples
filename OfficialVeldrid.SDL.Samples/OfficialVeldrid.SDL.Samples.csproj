@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Veldrid.SDL.Samples\Base\*.*">
+      <Link>SDLBase\%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
+    <Compile Include="..\Veldrid.Maui.Samples\Veldrid.Maui.Controls\AssetPrimitives\*.*">
+      <Link>AssetPrimitives\%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
+    <Compile Include="..\Veldrid.Maui.Samples\Veldrid.Maui.Controls\AssetProcessor\*.*">
+      <Link>AssetProcessor\%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
+    <Compile Include="..\Veldrid.Maui.Samples\Veldrid.Maui.Controls\Base\*.*">
+      <Link>Base\%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Veldrid.Maui.Samples\Veldrid.Maui.Samples.Core\LearnOpenGL\*.*">
+      <Link>LearnOpenGL\%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
+    <EmbeddedResource Include="..\Veldrid.Maui.Samples\Veldrid.Maui.Samples.Core\LearnOpenGL\Assets\Images\**">
+      <Link>LearnOpenGL\Assets\Images\%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Veldrid.SDL.Samples\Program.cs" Link="Program.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Veldrid" Version="4.8.0" />
+    <PackageReference Include="Veldrid.SDL2" Version="4.8.0" />
+    <PackageReference Include="Veldrid.StartupUtilities" Version="4.8.0" />
+    <PackageReference Include="Veldrid.Utilities" Version="4.8.0" />
+    <PackageReference Include="Veldrid.SPIRV" Version="1.0.15" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.4" Condition="$(TargetFramework.Contains('windows')) == true or $(TargetFramework) == 'net6.0'" />
+  </ItemGroup>
+</Project>
