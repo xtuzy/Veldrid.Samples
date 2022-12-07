@@ -101,7 +101,7 @@ layout(set = 0, binding = 2) uniform sampler Sampler;
 
 void main()
 {
-    FragColor = mix(texture(sampler2D(Texture1, Sampler), TexCoord),texture(sampler2D(Texture2, Sampler),TexCoord) ,0.2);
+    FragColor = mix(texture(sampler2D(Texture1, Sampler), TexCoord),texture(sampler2D(Texture2, Sampler),TexCoord) ,0.2) * vec4(1,1,1, ourColor.x);//SPIRV will optimize and ignore unused. in Vertices data,if i don't use ourColor data, TexCoord data after Color data, so it use Color data as TextCoord  data
 }";
             var vertexShaderDesc = new ShaderDescription(ShaderStages.Vertex, Encoding.UTF8.GetBytes(vertexCode), "main");
             var fragmentShaderDesc = new ShaderDescription(ShaderStages.Fragment, Encoding.UTF8.GetBytes(fragmentCode), "main");
