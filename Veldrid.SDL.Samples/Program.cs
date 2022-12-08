@@ -18,9 +18,13 @@ namespace Veldrid.SDL.Samples
             //platformInterface.Drawable = new Shaders_MoreAttributes();
             //platformInterface.Drawable = new Textures();
             //platformInterface.Drawable = new Textures_ApplyingTextures();
-            platformInterface.Drawable = new Textures_TextureUnits();
+            //platformInterface.Drawable = new Textures_TextureUnits();
             //platformInterface.Drawable = new Transformations_InPractice();
+            //platformInterface.Drawable = new CoordinateSystems_Going3D();
+            platformInterface.Drawable = new CoordinateSystems_More3D();
 
+
+            window.Window.Title = platformInterface.Drawable.GetType().Name;
             while (window.Window.Exists)
             {
                 window.Window.PumpEvents();
