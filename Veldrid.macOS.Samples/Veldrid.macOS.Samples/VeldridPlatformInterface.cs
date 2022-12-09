@@ -19,10 +19,10 @@ namespace Veldrid.macOS.Samples
 
         public VeldridPlatformInterface(VeldridPlatformView view, GraphicsBackend backend = GraphicsBackend.Metal)
         {
-            PlatformType = PlatformType.Mobile;
+            PlatformType = PlatformType.Desktop;
 
-            if (!(backend == GraphicsBackend.Metal || backend == GraphicsBackend.OpenGLES))
-                throw new NotSupportedException($"Not support {backend} backend on iOS or Maccatalyst.");
+            if (!(backend == GraphicsBackend.Metal))
+                throw new NotSupportedException($"Not support {backend} backend on Mac.");
             _backend = backend;
 
             _options = new GraphicsDeviceOptions(false, null, false, ResourceBindingModel.Improved, true, true);
@@ -98,8 +98,8 @@ namespace Veldrid.macOS.Samples
         {
             SwapchainSource ss = SwapchainSource.CreateNSView(_view.Handle);
             //MTLSwapchain内部自动转换成Pixel
-            //SwapchainDescription scd = new SwapchainDescription(ss,(uint)_view.CorrectedFrame.Width,(uint)_view.CorrectedFrame.Height, PixelFormat.R32_Float,false);
-            SwapchainDescription scd = new SwapchainDescription(ss, (uint)_view.CorrectedFrame.Width, (uint)_view.CorrectedFrame.Height, null, true, true);
+            SwapchainDescription scd = new SwapchainDescription(ss,(uint)_view.CorrectedFrame.Width,(uint)_view.CorrectedFrame.Height, PixelFormat.R32_Float,false);//参考Veldrid.Samples的iOS
+            //SwapchainDescription scd = new SwapchainDescription(ss, (uint)_view.CorrectedFrame.Width, (uint)_view.CorrectedFrame.Height, null, true, true);//参考VeldridNSViewExample
             if (_backend == GraphicsBackend.Metal)
             {
                 //_graphicsDevice = GraphicsDevice.CreateMetal(_options);
@@ -107,15 +107,14 @@ namespace Veldrid.macOS.Samples
                 _graphicsDevice = GraphicsDevice.CreateMetal(_options, scd);
                 _swapChain = _graphicsDevice.MainSwapchain;
             }
-            else if (_backend == GraphicsBackend.OpenGLES)
+            else if (_backend == GraphicsBackend.OpenGL)
             {
-                _graphicsDevice = GraphicsDevice.CreateOpenGLES(_options, scd);
-                _swapChain = _graphicsDevice.MainSwapchain;
+                throw new NotImplementedException("Current not support OpenGL on Mac");
             }
             else if (_backend == GraphicsBackend.Vulkan)
             {
                 //Future maybe use MoltenVK
-                throw new NotImplementedException("Current not support Vulkan on iOS");
+                throw new NotImplementedException("Current not support Vulkan on Mac");
             }
             _resources = new DisposeCollectorResourceFactory(_graphicsDevice.ResourceFactory);
             InvokeGraphicsDeviceCreated();

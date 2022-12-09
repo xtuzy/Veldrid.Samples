@@ -28,8 +28,9 @@ namespace Veldrid.macOS.Samples
             buttonContainer.AddView(new NSButton() { Title = nameof(Veldrid.Maui.Samples.Core.ComputeParticles.ComputeParticlesApplication) }, NSStackViewGravity.Center);
             buttonContainer.AddView(new NSButton() { Title = nameof(Veldrid.Maui.Samples.Core.Instancing.InstancingApplication) }, NSStackViewGravity.Center);
             buttonContainer.AddView(new NSButton() { Title = nameof(Veldrid.Maui.Samples.Core.Offscreen.OffscreenApplication) }, NSStackViewGravity.Center);
+            buttonContainer.AddView(new NSButton() { Title = "LearnOpenGL" }, NSStackViewGravity.Center);
             var platformView = new VeldridPlatformView();
-            var platformInterface = new VeldridPlatformInterface(platformView, GraphicsBackend.OpenGL);
+            var platformInterface = new VeldridPlatformInterface(platformView, GraphicsBackend.Metal);
             var camera = new SimpleCamera();
             foreach (var view in buttonContainer.Subviews)
             {
@@ -50,6 +51,8 @@ namespace Veldrid.macOS.Samples
                             platformInterface.Drawable = new Veldrid.Maui.Samples.Core.Instancing.InstancingApplication(camera);
                         else if (button.Title == nameof(Veldrid.Maui.Samples.Core.Offscreen.OffscreenApplication))
                             platformInterface.Drawable = new Veldrid.Maui.Samples.Core.Offscreen.OffscreenApplication(camera);
+                        else if (button.Title == "LearnOpenGL")
+                            platformInterface.Drawable = new Veldrid.Maui.Samples.Core.LearnOpenGL.CoordinateSystems_MoreCubes();
                     };
                 }
             }
