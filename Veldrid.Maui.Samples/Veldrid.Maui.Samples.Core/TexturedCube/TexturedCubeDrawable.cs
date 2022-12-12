@@ -29,8 +29,8 @@ namespace Veldrid.Maui.Samples.Core.TexturedCube
 
         public TexturedCubeDrawable()
         {
-            //_stoneTexData = LoadEmbeddedAsset<ProcessedTexture>("spnza_bricks_a_diff.binary");
-            _stoneTexData = new ImageProcessor().ProcessT(this.ReadEmbedAssetStream("TexturedCube.Assets.Images.spnza_bricks_a_diff.png"), ".png");
+            _stoneTexData = LoadEmbeddedAsset<ProcessedTexture>(this.ReadEmbedAssetPath("spnza_bricks_a_diff.binary"));
+            //_stoneTexData = new ImageProcessor().ProcessT(this.ReadEmbedAssetStream("TexturedCube.Assets.Images.spnza_bricks_a_diff.png"), ".png");
             _vertices = GetCubeVertices();
             _indices = GetCubeIndices();
         }

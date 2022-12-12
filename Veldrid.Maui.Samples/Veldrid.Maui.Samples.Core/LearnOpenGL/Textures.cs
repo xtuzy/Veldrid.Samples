@@ -95,7 +95,7 @@ void main()
 
             // from file load image as texture
             //texture = new ImageProcessor().ProcessT(this.ReadEmbedAssetStream("Images.wall.jpg"), ".jpg");
-            texture = LoadEmbeddedAsset<ProcessedTexture>(this.ReadEmbedAssetPath("ProcessedImages.awesomeface.binary"));
+            texture = LoadEmbeddedAsset<ProcessedTexture>(this.ReadEmbedAssetPath("ProcessedImages.wall.binary"));
             _surfaceTexture = texture.CreateDeviceTexture(GraphicsDevice, ResourceFactory, TextureUsage.Sampled);
             _surfaceTextureView = factory.CreateTextureView(_surfaceTexture);
             ResourceLayout textureLayout = factory.CreateResourceLayout(
