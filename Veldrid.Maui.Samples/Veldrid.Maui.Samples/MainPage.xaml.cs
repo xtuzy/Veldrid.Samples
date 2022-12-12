@@ -78,6 +78,9 @@ namespace Veldrid.Maui.Samples
                 }
             };
             var platformView = new VeldridView() { };
+#if IOS
+            platformView.Backend = GraphicsBackend.OpenGLES;
+#endif
             var camera = new SimpleCamera();
             PanGestureRecognizer panGesture = new PanGestureRecognizer();
             panGesture.PanUpdated += (sender, e) =>
