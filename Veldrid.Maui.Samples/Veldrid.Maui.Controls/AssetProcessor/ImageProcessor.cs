@@ -1,4 +1,4 @@
-﻿#if !ANDROID && !IOS && !MACCATALYST
+﻿#if !ANDROID //&& !IOS && !MACCATALYST
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Advanced;
 using SixLabors.ImageSharp.PixelFormats;

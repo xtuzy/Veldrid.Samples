@@ -1,4 +1,4 @@
-﻿#if IOS || MACCATALYST
+﻿#if AIOS || AMACCATALYST
 using CoreGraphics;
 using Foundation;
 using System;

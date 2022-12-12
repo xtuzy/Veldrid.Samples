@@ -9,20 +9,20 @@ namespace Veldrid.SDL.Samples
         static void Main(string[] args)
         {
             VeldridPlatformWindow window = new VeldridPlatformWindow();
-            var platformInterface = new VeldridPlatformInterface(window, GraphicsBackend.Direct3D11);
+            var platformInterface = new VeldridPlatformInterface(window, GraphicsBackend.Vulkan);
 
             //platformInterface.Drawable = new HelloTriangle();
             //platformInterface.Drawable = new HelloTriangle_ElementBufferObject();
             //platformInterface.Drawable = new Shaders_InsAndOuts();
             //platformInterface.Drawable = new Shaders_Uniform();
             //platformInterface.Drawable = new Shaders_MoreAttributes();
-            //platformInterface.Drawable = new Textures();
+            platformInterface.Drawable = new Textures();
             //platformInterface.Drawable = new Textures_ApplyingTextures();
             //platformInterface.Drawable = new Textures_TextureUnits();
             //platformInterface.Drawable = new Transformations_InPractice();
             //platformInterface.Drawable = new CoordinateSystems_Going3D();
             //platformInterface.Drawable = new CoordinateSystems_More3D();
-            platformInterface.Drawable = new CoordinateSystems_MoreCubes();
+            //platformInterface.Drawable = new CoordinateSystems_MoreCubes();
 
 
             window.Window.Title = platformInterface.Drawable.GetType().Name;

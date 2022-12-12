@@ -94,7 +94,8 @@ void main()
                new VertexElementDescription("Position", VertexElementSemantic.TextureCoordinate, VertexElementFormat.Float3));
 
             // from file load image as texture
-            texture = new ImageProcessor().ProcessT(this.ReadEmbedAssetStream("Images.wall.jpg"), ".jpg");
+            //texture = new ImageProcessor().ProcessT(this.ReadEmbedAssetStream("Images.wall.jpg"), ".jpg");
+            texture = LoadEmbeddedAsset<ProcessedTexture>(this.ReadEmbedAssetPath("ProcessedImages.awesomeface.binary"));
             _surfaceTexture = texture.CreateDeviceTexture(GraphicsDevice, ResourceFactory, TextureUsage.Sampled);
             _surfaceTextureView = factory.CreateTextureView(_surfaceTexture);
             ResourceLayout textureLayout = factory.CreateResourceLayout(
