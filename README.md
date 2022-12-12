@@ -3,5 +3,6 @@ This project convert [veldrid-samples](https://github.com/mellinoe/veldrid-sampl
 
 https://user-images.githubusercontent.com/17793881/205241391-f77ead46-a311-4700-881a-ae8d5675bef4.mp4
 
+[see more platform result](https://github.com/xtuzy/Veldrid.Samples/issues/1)
 # Guide
 See [wiki](https://github.com/xtuzy/Veldrid.Samples/wiki)
