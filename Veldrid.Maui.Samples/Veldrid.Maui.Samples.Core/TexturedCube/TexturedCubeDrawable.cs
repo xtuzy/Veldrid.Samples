@@ -53,13 +53,13 @@ namespace Veldrid.Maui.Samples.Core.TexturedCube
             var vertexShaderDesc = new ShaderDescription(ShaderStages.Vertex, this.ReadEmbedAsset("TexturedCube.Assets.Shaders.vert.glsl"), "main");
             var fragmentShaderDesc = new ShaderDescription(ShaderStages.Fragment, this.ReadEmbedAsset("TexturedCube.Assets.Shaders.frag.glsl"), "main");
             Shader[] sharders;
-            if (factory.BackendType == GraphicsBackend.OpenGL)
+            /*if (factory.BackendType == GraphicsBackend.OpenGL)
             {
                 var vertexShader = factory.CreateShader(vertexShaderDesc);
                 var fragmentShader = factory.CreateShader(fragmentShaderDesc);
                 sharders = new Shader[] { vertexShader, fragmentShader };
             }
-            else
+            else*/
             {
                 sharders = factory.CreateFromSpirv(vertexShaderDesc, fragmentShaderDesc);
             }
