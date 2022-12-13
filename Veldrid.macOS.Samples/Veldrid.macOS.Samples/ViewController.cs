@@ -45,7 +45,7 @@ namespace Veldrid.macOS.Samples
             buttonContainer1.AddView(new NSButton() { Title = nameof(Veldrid.Maui.Samples.Core.LearnOpenGL.CoordinateSystems_MoreCubes) }, NSStackViewGravity.Center);
 
             var platformView = new VeldridPlatformView();
-            var platformInterface = new VeldridPlatformInterface(platformView, GraphicsBackend.Metal);
+            var platformInterface = new VeldridPlatformInterface(platformView, GraphicsBackend.Vulkan);
             var camera = new SimpleCamera();
             foreach (var view in buttonContainer.Subviews)
             {

@@ -21,7 +21,7 @@ namespace Veldrid.macOS.Samples
         {
             PlatformType = PlatformType.Desktop;
 
-            if (!(backend == GraphicsBackend.Metal))
+            if (!(backend == GraphicsBackend.Metal || backend == GraphicsBackend.Vulkan))
                 throw new NotSupportedException($"Not support {backend} backend on Mac.");
             _backend = backend;
 
@@ -113,8 +113,10 @@ namespace Veldrid.macOS.Samples
             }
             else if (_backend == GraphicsBackend.Vulkan)
             {
-                //Future maybe use MoltenVK
-                throw new NotImplementedException("Current not support Vulkan on Mac");
+                //need use MoltenVK
+                _graphicsDevice = GraphicsDevice.CreateVulkan(_options, scd);
+                _swapChain = _graphicsDevice.MainSwapchain;
+                //throw new NotImplementedException("Current not support Vulkan on Mac");
             }
             _resources = new DisposeCollectorResourceFactory(_graphicsDevice.ResourceFactory);
             InvokeGraphicsDeviceCreated();

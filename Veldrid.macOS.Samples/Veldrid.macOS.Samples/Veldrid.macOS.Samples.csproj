@@ -25,4 +25,10 @@
       <ExcludeFromCurrentConfiguration>true</ExcludeFromCurrentConfiguration>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <NativeReference Include="libvulkan.dylib">
+      <Kind>Dynamic</Kind>
+      <SmartLink>True</SmartLink>
+    </NativeReference>
+  </ItemGroup>
 </Project>
