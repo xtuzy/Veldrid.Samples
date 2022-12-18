@@ -11,7 +11,6 @@
     <PackageReference Include="Veldrid.SPIRV" Version="1.0.16" />
     <PackageReference Include="NativeLibraryLoader" Version="1.0.13" />
     <PackageReference Include="Veldrid.Utilities" Version="4.9.0-beta3" />
-    <PackageReference Include="Veldrid" Version="4.9.0-beta3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Veldrid.Maui.Samples\Veldrid.Maui.Controls\Veldrid.Maui.Controls.csproj" />
