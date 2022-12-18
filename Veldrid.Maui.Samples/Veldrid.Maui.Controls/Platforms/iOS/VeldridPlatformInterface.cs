@@ -27,7 +27,8 @@ namespace Veldrid.Maui.Controls.Platforms.iOS
                 throw new NotSupportedException($"Not support {backend} backend on iOS or Maccatalyst.");
             _backend = backend;
 
-            _options = new GraphicsDeviceOptions(false, null, false, ResourceBindingModel.Improved);
+            //_options = new GraphicsDeviceOptions(false, null, false, ResourceBindingModel.Improved);
+            _options = new GraphicsDeviceOptions(false, null, false, ResourceBindingModel.Improved, true, true);
 
             _view = view;
             _view.ViewLoaded += CreateGraphicsDevice;
