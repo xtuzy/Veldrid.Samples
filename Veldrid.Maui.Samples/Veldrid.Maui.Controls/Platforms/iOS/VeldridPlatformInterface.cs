@@ -23,7 +23,7 @@ namespace Veldrid.Maui.Controls.Platforms.iOS
         {
             PlatformType = PlatformType.Mobile;
 
-            if (!(backend == GraphicsBackend.Metal || backend == GraphicsBackend.OpenGLES))
+            if (!(backend == GraphicsBackend.Metal || backend == GraphicsBackend.OpenGLES || backend == GraphicsBackend.Vulkan))
                 throw new NotSupportedException($"Not support {backend} backend on iOS or Maccatalyst.");
             _backend = backend;
 
@@ -110,8 +110,10 @@ namespace Veldrid.Maui.Controls.Platforms.iOS
             }
             else if (_backend == GraphicsBackend.Vulkan)
             {
-                //Future maybe use MoltenVK
-                throw new NotImplementedException("Current not support Vulkan on iOS");
+                //need use MoltenVK nuget package
+                _graphicsDevice = GraphicsDevice.CreateVulkan(_options, scd);
+                _swapChain = _graphicsDevice.MainSwapchain;
+                //throw new NotImplementedException("Current not support Vulkan on iOS");
             }
             _resources = new DisposeCollectorResourceFactory(_graphicsDevice.ResourceFactory);
             InvokeGraphicsDeviceCreated();

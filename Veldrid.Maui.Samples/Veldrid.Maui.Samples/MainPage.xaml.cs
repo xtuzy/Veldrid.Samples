@@ -1,13 +1,54 @@
-﻿using Veldrid.Maui.Controls;
+﻿using System.Runtime.InteropServices;
+using Veldrid.Maui.Controls;
 using Veldrid.Maui.Controls.Base;
+using Vulkan;
 
 namespace Veldrid.Maui.Samples
 {
     public partial class MainPage : ContentPage
     {
+        //[DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        //public static unsafe extern VkResult vkCreateInstance(VkInstanceCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkInstance* pInstance);
+
         public MainPage()
         {
             InitializeComponent();
+#if IOS
+            var success = System.Runtime.InteropServices.NativeLibrary.TryLoad("libMoltenVK.a", typeof(MainPage).Assembly, System.Runtime.InteropServices.DllImportSearchPath.AssemblyDirectory, out var handle);
+            var success01 = System.Runtime.InteropServices.NativeLibrary.TryLoad("libMoltenVK", typeof(MainPage).Assembly, System.Runtime.InteropServices.DllImportSearchPath.AssemblyDirectory, out var handle01);
+            var success02 = System.Runtime.InteropServices.NativeLibrary.TryLoad("MoltenVK", typeof(MainPage).Assembly, System.Runtime.InteropServices.DllImportSearchPath.AssemblyDirectory, out var handle02);
+            var success8 = System.Runtime.InteropServices.NativeLibrary.TryLoad("libMoltenVK.a", typeof(MainPage).Assembly, System.Runtime.InteropServices.DllImportSearchPath.ApplicationDirectory, out var handle8);
+            var success81 = System.Runtime.InteropServices.NativeLibrary.TryLoad("libMoltenVK", typeof(MainPage).Assembly, System.Runtime.InteropServices.DllImportSearchPath.ApplicationDirectory, out var handle81);
+            var success9 = System.Runtime.InteropServices.NativeLibrary.TryLoad("libMoltenVK.a", typeof(MainPage).Assembly, System.Runtime.InteropServices.DllImportSearchPath.UseDllDirectoryForDependencies, out var handle9);
+            var success91 = System.Runtime.InteropServices.NativeLibrary.TryLoad("libMoltenVK", typeof(MainPage).Assembly, System.Runtime.InteropServices.DllImportSearchPath.UseDllDirectoryForDependencies, out var handle91);
+            var success1 = System.Runtime.InteropServices.NativeLibrary.TryLoad("@rpath/libMoltenVK.a", out var handle1);
+            var success2 = System.Runtime.InteropServices.NativeLibrary.TryLoad("__Internal", out var handle2);
+            var success3 = System.Runtime.InteropServices.NativeLibrary.TryLoad("MoltenVK", out var handle3);
+            var success4 = System.Runtime.InteropServices.NativeLibrary.TryLoad("@rpath/MoltenVK", out var handle4);
+            var success5 = System.Runtime.InteropServices.NativeLibrary.TryLoad("@rpath/libMoltenVK", out var handle5);
+            var success6 = System.Runtime.InteropServices.NativeLibrary.TryLoad("libMoltenVK", out var handle6);
+            var success7 = System.Runtime.InteropServices.NativeLibrary.TryLoad("MoltenVK.a", out var handle7);
+            var success10 = System.Runtime.InteropServices.NativeLibrary.TryLoad("MoltenVK.a", out var handle10);
+            var success11 = System.Runtime.InteropServices.NativeLibrary.TryLoad("libvulkan.dylib", typeof(MainPage).Assembly, System.Runtime.InteropServices.DllImportSearchPath.UseDllDirectoryForDependencies, out var handle11);
+            var documentsPath = Foundation.NSBundle.MainBundle.BundlePath;
+            var filePath = System.IO.Path.Combine(documentsPath);
+            var path = new DirectoryInfo(filePath);
+            var ds = path.EnumerateDirectories();
+            var fs = path.EnumerateFiles();
+            var p10 = ObjCRuntime.Dlfcn.dlopen(null, 0x002);
+            var p11 = ObjCRuntime.Dlfcn.dlsym(p10, "vkCreateInstance");
+            var p12 = ObjCRuntime.Dlfcn.dlsym(p10, "_vkCreateInstance");
+            var p21 = ObjCRuntime.Dlfcn.dlsym(p10, "CompileGlslToSpirv");
+            var p22 = ObjCRuntime.Dlfcn.dlsym(p10, "_CompileGlslToSpirv");
+            var library = Vulkan.NativeLibrary.Load(null);
+            IntPtr p0 = library.LoadFunctionPointer("vkCreateInstance");
+            IntPtr p01 = library.LoadFunctionPointer("_vkCreateInstance");
+            IntPtr p02 = library.LoadFunctionPointer("vkEnumerateInstanceLayerProperties");
+            IntPtr p03 = library.LoadFunctionPointer("_vkEnumerateInstanceLayerProperties");
+            var ios = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
+            if (success == true)
+                throw new Exception();
+#endif
             /*            if (OperatingSystem.IsWindows())
                         {
                             //veldridView.Drawable = new ComputeTextureApplication(null);//Success
@@ -79,7 +120,7 @@ namespace Veldrid.Maui.Samples
             };
             var platformView = new VeldridView() { };
 #if IOS
-            platformView.Backend = GraphicsBackend.OpenGLES;
+            platformView.Backend = GraphicsBackend.Vulkan;
 #elif ANDROID
             platformView.Backend = GraphicsBackend.OpenGLES;
 #endif

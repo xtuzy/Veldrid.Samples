@@ -26,9 +26,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <NativeReference Include="libvulkan.dylib">
-      <Kind>Dynamic</Kind>
-      <SmartLink>True</SmartLink>
-    </NativeReference>
+    <PackageReference Include="Veldrid.VK.macOSNativeAsset" Version="1.3.232" />
   </ItemGroup>
 </Project>
