@@ -81,7 +81,7 @@ namespace MauiGPUControl.Platforms.Windows
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine("Encountered an error while rendering: " + e);
+                    Debug.WriteLine("Encountered an error while rendering: " + ex);
                     //throw;
                 }
             }
