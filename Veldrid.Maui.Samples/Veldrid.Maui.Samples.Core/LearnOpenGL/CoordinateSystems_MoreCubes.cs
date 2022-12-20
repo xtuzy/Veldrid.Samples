@@ -220,12 +220,15 @@ void main()
             _commandList.UpdateBuffer(_viewBuffer, 0, view);
             _commandList.UpdateBuffer(_projectionBuffer, 0, projection);
 
+            _commandList.SetPipeline(_pipeline);
+
+            _commandList.SetGraphicsResourceSet(0, _transSet);
+            _commandList.SetGraphicsResourceSet(1, _textureSet);
+
             _commandList.SetVertexBuffer(0, _vertexBuffer);
             _commandList.SetIndexBuffer(_indexBuffer, IndexFormat.UInt16);
             _commandList.SetVertexBuffer(1, _instanceVB);
-            _commandList.SetPipeline(_pipeline);
-            _commandList.SetGraphicsResourceSet(0, _transSet);
-            _commandList.SetGraphicsResourceSet(1, _textureSet);
+
             _commandList.DrawIndexed(
                 indexCount: (uint)indices.Length,
                 instanceCount: (uint)(cubePositions.Length / 3),
