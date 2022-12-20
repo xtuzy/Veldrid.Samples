@@ -30,6 +30,9 @@
     <EmbeddedResource Include="..\Veldrid.Maui.Samples\Veldrid.Maui.Samples.Core\LearnOpenGL\Assets\Images\**">
       <Link>LearnOpenGL\Assets\Images\%(RecursiveDir)%(FileName)%(Extension)</Link>
     </EmbeddedResource>
+    <EmbeddedResource Include="..\Veldrid.Maui.Samples\Veldrid.Maui.Samples.Core\LearnOpenGL\Assets\ProcessedImages\**">
+      <Link>LearnOpenGL\Assets\ProcessedImages\%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
