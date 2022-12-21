@@ -119,6 +119,7 @@ void main()
             // We want to render directly to the output window.
             _commandList.SetFramebuffer(MainSwapchain.Framebuffer);
             _commandList.ClearColorTarget(0, RgbaFloat.Black);
+            _commandList.ClearDepthStencil(1f);
 
             textRender.Draw();
 

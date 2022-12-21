@@ -87,7 +87,7 @@ void main()
             pipelineDescription.DepthStencilState = DepthStencilStateDescription.Disabled;
             pipelineDescription.RasterizerState = new RasterizerStateDescription(
                 cullMode: FaceCullMode.Back,
-                fillMode: PolygonFillMode.Wireframe,//draw outline or fill
+                fillMode: GraphicsDevice.Features.FillModeWireframe? PolygonFillMode.Wireframe: PolygonFillMode.Solid,//draw outline or fill
                 frontFace: FrontFace.Clockwise,//order of drawing point, see Indices array.
                 depthClipEnabled: true,
                 scissorTestEnabled: false);

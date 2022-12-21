@@ -128,7 +128,7 @@ void main()
             _textureSet = factory.CreateResourceSet(new ResourceSetDescription(
                textureLayout,
                _surfaceTextureView,
-               GraphicsDevice.Aniso4xSampler));
+               GraphicsDevice.LinearSampler));
         }
 
         protected override void Draw(float deltaSeconds)

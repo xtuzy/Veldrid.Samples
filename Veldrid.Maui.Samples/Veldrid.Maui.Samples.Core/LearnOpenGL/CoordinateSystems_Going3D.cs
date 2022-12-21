@@ -199,10 +199,7 @@ void main()
             // Begin() must be called before commands can be issued.
             _commandList.Begin();
 
-            _commandList.SetFramebuffer(MainSwapchain.Framebuffer);
-            _commandList.ClearColorTarget(0, RgbaFloat.Black);
-            _commandList.ClearDepthStencil(1f);
-
+            
             var model = Matrix4x4.CreateRotationX(MathF.PI / 180 * -55); //or: var model =  Matrix4x4.CreateFromAxisAngle(Vector3.UnitX, - MathF.PI / 180 * 55);
             var view = Matrix4x4.CreateTranslation(0, 0, - 3f);
             //var view = Matrix4x4.CreateLookAt(Vector3.UnitZ * 3f, Vector3.Zero, Vector3.UnitY);
@@ -215,11 +212,18 @@ void main()
             _commandList.UpdateBuffer(_viewBuffer, 0, view);
             _commandList.UpdateBuffer(_projectionBuffer, 0, projection);
 
-            _commandList.SetVertexBuffer(0, _vertexBuffer);
-            _commandList.SetIndexBuffer(_indexBuffer, IndexFormat.UInt16);
+            _commandList.SetFramebuffer(MainSwapchain.Framebuffer);
+            _commandList.ClearColorTarget(0, RgbaFloat.Black);
+            _commandList.ClearDepthStencil(1f);
+
+
             _commandList.SetPipeline(_pipeline);
             _commandList.SetGraphicsResourceSet(0, _transSet);
             _commandList.SetGraphicsResourceSet(1, _textureSet);
+
+            _commandList.SetVertexBuffer(0, _vertexBuffer);
+            _commandList.SetIndexBuffer(_indexBuffer, IndexFormat.UInt16);
+
             _commandList.DrawIndexed(
                 indexCount: (uint)quadIndices.Length,
                 instanceCount: 1,
