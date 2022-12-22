@@ -88,20 +88,20 @@ layout(set = 0, binding = 2) uniform ProjectionTrans
   mat4 projection;
 };
 
-layout (location = 0) in vec3 aPos;
-layout (location = 1) in vec2 aTexCoord;
+layout (location = 0) in vec3 Position;
+layout (location = 1) in vec2 TextureCoord;
 
 layout (location = 0) out vec2 TexCoord;
 
 void main()
 {
     // note that we read the multiplication from right to left
-    vec4 worldPosition = model * vec4(aPos, 1);
+    vec4 worldPosition = model * vec4(Position, 1);
     vec4 viewPosition = view * worldPosition;
     vec4 clipPosition = projection * viewPosition;
     gl_Position = clipPosition;
-    //gl_Position = projection * view * model * vec4(aPos, 1.0);
-    TexCoord = vec2(aTexCoord.x, 1 - aTexCoord.y);
+    //gl_Position = projection * view * model * vec4(Position, 1.0);
+    TexCoord = vec2(TextureCoord.x, 1 - TextureCoord.y);
 }";
 
             string fragmentCode = @"
@@ -151,9 +151,9 @@ void main()
             _projectionBuffer = factory.CreateBuffer(new BufferDescription((uint)sizeof(Matrix4x4), BufferUsage.UniformBuffer));
             ResourceLayout transLayout = factory.CreateResourceLayout(
                new ResourceLayoutDescription(
-                   new ResourceLayoutElementDescription("model", ResourceKind.UniformBuffer, ShaderStages.Vertex),
-                   new ResourceLayoutElementDescription("view", ResourceKind.UniformBuffer, ShaderStages.Vertex),
-                   new ResourceLayoutElementDescription("projection", ResourceKind.UniformBuffer, ShaderStages.Vertex)
+                   new ResourceLayoutElementDescription("ModelTrans", ResourceKind.UniformBuffer, ShaderStages.Vertex),
+                   new ResourceLayoutElementDescription("ViewTrans", ResourceKind.UniformBuffer, ShaderStages.Vertex),
+                   new ResourceLayoutElementDescription("ProjectionTrans", ResourceKind.UniformBuffer, ShaderStages.Vertex)
                    ));
 
             ResourceLayout textureLayout = factory.CreateResourceLayout(
@@ -205,7 +205,7 @@ void main()
             //var view = Matrix4x4.CreateLookAt(Vector3.UnitZ * 3f, Vector3.Zero, Vector3.UnitY);
             var projection = Matrix4x4.CreatePerspectiveFieldOfView(
                 MathF.PI / 180 * 45,
-                PlatformInterface.Width / PlatformInterface.Height,
+                PlatformInterface.Width / (float)PlatformInterface.Height,
                 0.1f,
                 100f);
             _commandList.UpdateBuffer(_modelBuffer, 0, model);

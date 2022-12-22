@@ -144,9 +144,9 @@ void main()
             _projectionBuffer = factory.CreateBuffer(new BufferDescription((uint)sizeof(Matrix4x4), BufferUsage.UniformBuffer));
             ResourceLayout transLayout = factory.CreateResourceLayout(
                new ResourceLayoutDescription(
-                   new ResourceLayoutElementDescription("model", ResourceKind.UniformBuffer, ShaderStages.Vertex),
-                   new ResourceLayoutElementDescription("view", ResourceKind.UniformBuffer, ShaderStages.Vertex),
-                   new ResourceLayoutElementDescription("projection", ResourceKind.UniformBuffer, ShaderStages.Vertex)
+                   new ResourceLayoutElementDescription("ModelTrans", ResourceKind.UniformBuffer, ShaderStages.Vertex),
+                   new ResourceLayoutElementDescription("ViewTrans", ResourceKind.UniformBuffer, ShaderStages.Vertex),
+                   new ResourceLayoutElementDescription("ProjectionTrans", ResourceKind.UniformBuffer, ShaderStages.Vertex)
                    ));
 
             ResourceLayout textureLayout = factory.CreateResourceLayout(
@@ -213,7 +213,7 @@ void main()
             var view = Matrix4x4.CreateTranslation(0, 0, -3f);//var view = Matrix4x4.CreateLookAt(Vector3.UnitZ * 3f, Vector3.Zero, Vector3.UnitY);
             var projection = Matrix4x4.CreatePerspectiveFieldOfView(
                 MathF.PI / 180 * 45,
-                PlatformInterface.Width / PlatformInterface.Height,
+                PlatformInterface.Width / (float)PlatformInterface.Height,
                 0.1f,
                 100f);
             _commandList.UpdateBuffer(_modelBuffer, 0, model);

@@ -42,7 +42,7 @@ namespace Veldrid.Maui.Samples
 #if IOS
             platformView.Backend = GraphicsBackend.OpenGLES;
 #elif ANDROID
-            platformView.Backend = GraphicsBackend.OpenGLES;
+            //platformView.Backend = GraphicsBackend.OpenGLES;
 #endif
             var camera = new SimpleCamera();
             PanGestureRecognizer panGesture = new PanGestureRecognizer();
