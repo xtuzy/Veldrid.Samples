@@ -35,6 +35,8 @@ namespace Veldrid.Maui.Samples
                     new Button(){ Text = nameof(Veldrid.Maui.Samples.Core.LearnOpenGL.CoordinateSystems_Going3D) },
                     new Button(){ Text = nameof(Veldrid.Maui.Samples.Core.LearnOpenGL.CoordinateSystems_More3D) },
                     new Button(){ Text = nameof(Veldrid.Maui.Samples.Core.LearnOpenGL.CoordinateSystems_MoreCubes) },
+                    new Button(){ Text = nameof(Veldrid.Maui.Samples.Core.LearnOpenGL.Camera_LookAt) },
+                    new Button(){ Text = nameof(Veldrid.Maui.Samples.Core.LearnOpenGL.Camera_WalkAround) },
                     new Button(){ Text = "Remove"},
                 }
             };
@@ -55,7 +57,7 @@ namespace Veldrid.Maui.Samples
                         break;
                 }
             };
-            platformView.GestureRecognizers.Add(panGesture);
+            //platformView.GestureRecognizers.Add(panGesture);
             foreach (var view in buttonContainer.Children)
             {
                 if (view is Button)
@@ -101,7 +103,44 @@ namespace Veldrid.Maui.Samples
                             platformView.Drawable = new Veldrid.Maui.Samples.Core.LearnOpenGL.CoordinateSystems_More3D();
                         else if (button.Text == nameof(Veldrid.Maui.Samples.Core.LearnOpenGL.CoordinateSystems_MoreCubes))
                             platformView.Drawable = new Veldrid.Maui.Samples.Core.LearnOpenGL.CoordinateSystems_MoreCubes();
-
+                        else if (button.Text == nameof(Veldrid.Maui.Samples.Core.LearnOpenGL.Camera_LookAt))
+                            platformView.Drawable = new Veldrid.Maui.Samples.Core.LearnOpenGL.Camera_LookAt();
+                        else if (button.Text == nameof(Veldrid.Maui.Samples.Core.LearnOpenGL.Camera_WalkAround))
+                        {
+                            var d = new Veldrid.Maui.Samples.Core.LearnOpenGL.Camera_WalkAround();
+                            SwipeGestureRecognizer upSwipeGesture = new SwipeGestureRecognizer { Direction = SwipeDirection.Up};
+                            SwipeGestureRecognizer downSwipeGesture = new SwipeGestureRecognizer { Direction = SwipeDirection.Down};
+                            SwipeGestureRecognizer leftSwipeGesture = new SwipeGestureRecognizer { Direction = SwipeDirection.Left};
+                            SwipeGestureRecognizer rightSwipeGesture = new SwipeGestureRecognizer { Direction = SwipeDirection.Right};
+                            
+                            var action = (object? sender, SwipedEventArgs e) =>
+                            {
+                                switch (e.Direction)
+                                {
+                                    case SwipeDirection.Right:
+                                        d.processInput('D');
+                                        break;
+                                    case SwipeDirection.Left:
+                                        d.processInput('A');
+                                        break;
+                                    case SwipeDirection.Up:
+                                        d.processInput('W');
+                                        break;
+                                    case SwipeDirection.Down:
+                                        d.processInput('S');
+                                        break;
+                                }
+                            };
+                            upSwipeGesture.Swiped += action.Invoke;
+                            downSwipeGesture.Swiped += action.Invoke;
+                            leftSwipeGesture.Swiped += action.Invoke;
+                            rightSwipeGesture.Swiped += action.Invoke;
+                            platformView.GestureRecognizers.Add(upSwipeGesture);
+                            platformView.GestureRecognizers.Add(downSwipeGesture);
+                            platformView.GestureRecognizers.Add(leftSwipeGesture);
+                            platformView.GestureRecognizers.Add(rightSwipeGesture);
+                            platformView.Drawable = d;
+                        }
                         else if (button.Text == "Remove")
                             platformView.Drawable = null;
                     };
