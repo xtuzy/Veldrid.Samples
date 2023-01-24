@@ -57,7 +57,7 @@ namespace Veldrid.Maui.Controls.Base
         public float MoveSpeed { get => _moveSpeed; set => _moveSpeed = value; }
         public Vector3 Forward => GetLookDir();
 
-        public abstract void Update(float deltaSeconds);
+        public abstract void Update(float deltaMillisecond);
 
         protected float Clamp(float value, float min, float max)
         {

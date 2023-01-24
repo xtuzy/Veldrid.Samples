@@ -12,9 +12,7 @@ namespace Veldrid.Maui.Controls.Platforms.iOS
     {
         private VeldridPlatformView _view;
 
-        private readonly GraphicsDeviceOptions _options;
         private readonly GraphicsBackend _backend;
-        private CADisplayLink _timer;
 
         public override uint Width => (uint)(_view.Frame.Width * DeviceDisplay.Current.MainDisplayInfo.Density);
         public override uint Height => (uint)(_view.Frame.Height * DeviceDisplay.Current.MainDisplayInfo.Density);
@@ -27,44 +25,19 @@ namespace Veldrid.Maui.Controls.Platforms.iOS
                 throw new NotSupportedException($"Not support {backend} backend on iOS or Maccatalyst.");
             _backend = backend;
 
-            //_options = new GraphicsDeviceOptions(false, null, false, ResourceBindingModel.Improved);
-            _options = new GraphicsDeviceOptions(false, null, false, ResourceBindingModel.Improved, true, true);
-
             _view = view;
             _view.ViewLoaded += CreateGraphicsDevice;
             _view.SizeChanged += OnViewSizeChanged;
             _view.ViewRemoved += DestroyGraphicsDevice;
         }
 
-        /// <summary>
-        /// 在<see cref="CreateGraphicsDevice"/>后自动执行, 开使渲染循环.
-        /// </summary>
-        public void Run()
-        {
-            _timer = CADisplayLink.Create(RenderLoop);
-            if (DeviceInfo.Current.Version < new Version(10, 0))
-            {
-                _timer.FrameInterval = 1;
-            }
-            else if (DeviceInfo.Current.Version < new Version(15, 0))
-            {
-                _timer.PreferredFramesPerSecond = 60;
-            }
-            else
-            {
-                _timer.PreferredFrameRateRange = CAFrameRateRange.Default;
-            }
-            _timer.AddToRunLoop(NSRunLoop.Main, NSRunLoopMode.Default);//UI线程
-        }
-
         private void RenderLoop()
         {
-            float elapsed = (float)(_timer.TargetTimestamp - _timer.Timestamp);
             if (_graphicsDevice != null)
             {
                 try
                 {
-                    InvokeRendering(elapsed * 1000);
+                    InvokeRendering(16);
                 }
                 catch (Exception e)
                 {
@@ -90,6 +63,10 @@ namespace Veldrid.Maui.Controls.Platforms.iOS
 
         private void CreateGraphicsDevice()
         {
+            if (Options == null)
+                //_options = new GraphicsDeviceOptions(false, null, false, ResourceBindingModel.Improved);
+                Options = new GraphicsDeviceOptions(false, null, false, ResourceBindingModel.Improved, true, true);
+
             SwapchainSource ss = SwapchainSource.CreateUIView(_view.Handle);
             SwapchainDescription scd = new SwapchainDescription(
                 ss,
@@ -101,25 +78,53 @@ namespace Veldrid.Maui.Controls.Platforms.iOS
             {
                 //_gd = GraphicsDevice.CreateMetal(_options);
                 //_sc = _gd.ResourceFactory.CreateSwapchain(ref scd);
-                _graphicsDevice = GraphicsDevice.CreateMetal(_options, scd);
+                _graphicsDevice = GraphicsDevice.CreateMetal(Options.Value, scd);
                 _swapChain = _graphicsDevice.MainSwapchain;
             }
             else if (_backend == GraphicsBackend.OpenGLES)
             {
-                _graphicsDevice = GraphicsDevice.CreateOpenGLES(_options, scd);
+                _graphicsDevice = GraphicsDevice.CreateOpenGLES(Options.Value, scd);
                 _swapChain = _graphicsDevice.MainSwapchain;
             }
             else if (_backend == GraphicsBackend.Vulkan)
             {
                 //need use MoltenVK nuget package
-                _graphicsDevice = GraphicsDevice.CreateVulkan(_options, scd);
+                _graphicsDevice = GraphicsDevice.CreateVulkan(Options.Value, scd);
                 _swapChain = _graphicsDevice.MainSwapchain;
                 //throw new NotImplementedException("Current not support Vulkan on iOS");
             }
             _resources = new DisposeCollectorResourceFactory(_graphicsDevice.ResourceFactory);
             InvokeGraphicsDeviceCreated();
 
-            Run();
+            Animator = new ValueAnimator();
+            Animator.set(RenderLoop);
+            if (AutoReDraw == true)
+                Animator.start();
+        }
+
+        ValueAnimator Animator = null;
+        bool autoReDraw = false;
+        public override bool AutoReDraw
+        {
+            set
+            {
+                if (_graphicsDevice != null)//如果图形设备已经创建，那么动画对象已经创建，只需要判断是否开关
+                {
+                    if (value == true)
+                    {
+                        Animator.cancel();
+                        Animator.start();
+                    }
+                    else
+                        Animator.cancel();
+                }
+                autoReDraw = value;
+            }
+
+            get
+            {
+                return autoReDraw;
+            }
         }
 
         private void OnViewSizeChanged()

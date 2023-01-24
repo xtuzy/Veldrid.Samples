@@ -1,5 +1,4 @@
 ﻿#if WINDOWS
-using MauiGPUControl.Platforms.Windows;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Handlers;
 using Microsoft.UI.Xaml;

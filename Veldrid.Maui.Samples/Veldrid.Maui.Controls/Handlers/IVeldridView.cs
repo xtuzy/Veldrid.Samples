@@ -14,5 +14,12 @@ namespace Veldrid.Maui.Controls.Handlers
         /// On Windows, you only use D3D11.
         /// </summary>
         GraphicsBackend Backend { set; get; }
+
+        /// <summary>
+        /// 是否使用像游戏循环一样不断调用<see cref="BaseGpuDrawable.Draw(float)"/>
+        /// </summary>
+        bool AutoReDraw { set; get; }
+
+        GraphicsDeviceOptions? Options { set; get; }
     }
 }

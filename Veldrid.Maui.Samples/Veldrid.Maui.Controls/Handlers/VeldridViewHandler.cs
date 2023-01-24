@@ -11,11 +11,23 @@ namespace Veldrid.Maui.Controls.Handlers
         {
             [nameof(IVeldridView.Drawable)] = MapDrawable,
             [nameof(IVeldridView.Background)] = MapBackground,
+            [nameof(IVeldridView.AutoReDraw)] = MapAutoReDraw,
+            [nameof(IVeldridView.Options)] = MapOptions
         };
 
         private static void MapBackground(VeldridViewHandler arg1, IVeldridView arg2)
         {
             //throw new NotImplementedException();
+        }
+
+        private static void MapAutoReDraw(VeldridViewHandler handler, IVeldridView mauiView)
+        {
+            handler.window.AutoReDraw = mauiView.AutoReDraw;
+        }
+
+        private static void MapOptions(VeldridViewHandler handler, IVeldridView mauiView)
+        {
+            handler.window.Options = mauiView.Options;
         }
 
         public static CommandMapper<IVeldridView, VeldridViewHandler> CommandMapper = new(ViewCommandMapper)

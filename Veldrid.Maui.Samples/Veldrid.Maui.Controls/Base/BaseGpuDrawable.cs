@@ -51,12 +51,11 @@ namespace Veldrid.Maui.Controls.Base
         }
 
         /// <summary>
-        /// 如果添加Drawable到VeldridPlatformInterface时还没有创建设备,那么在创建设备时会调用这个方法
+        /// 如果添加Drawable到VeldridPlatformInterface时还没有创建设备,那么在创建设备时会调用这个方法,可在其中设置资源
         /// </summary>
-        private void OnGraphicsDeviceCreated()
+        protected virtual void OnGraphicsDeviceCreated()
         {
             CreateResources(ResourceFactory);
-            CreateSwapchainResources(ResourceFactory);
         }
 
         /// <summary>
@@ -69,26 +68,40 @@ namespace Veldrid.Maui.Controls.Base
 
         protected virtual string GetTitle() => GetType().Name;
 
+        /// <summary>
+        /// 该方法被<see cref="OnGraphicsDeviceCreated"/>调用, 主要是为适配Veldrid的旧项目
+        /// </summary>
+        /// <param name="factory"></param>
         protected abstract void CreateResources(ResourceFactory factory);
 
-        protected virtual void CreateSwapchainResources(ResourceFactory factory) { }
-
-        private void OnRender(float deltaSeconds)
+        private void OnRender(float deltaMillisecond)
         {
             if (GraphicsDevice != null)
             {
-                PreDraw(deltaSeconds);
-                Draw(deltaSeconds);
+                PreDraw(deltaMillisecond);
+                Draw(deltaMillisecond);
             }
         }
-        protected void PreDraw(float deltaSeconds)
+
+        /// <summary>
+        /// 其内部调用<see cref="BaseCamera.Update(float)"
+        /// </summary>
+        /// <param name="deltaMillisecond"></param>
+        protected void PreDraw(float deltaMillisecond)
         {
             if(_camera != null)
-                _camera.Update(deltaSeconds);
+                _camera.Update(deltaMillisecond);
         }
 
-        protected abstract void Draw(float deltaSeconds);
+        /// <summary>
+        /// 绘制命令在这里进行, 游戏循环里每帧都会调用它
+        /// </summary>
+        /// <param name="deltaMillisecond"></param>
+        protected abstract void Draw(float deltaMillisecond);
 
+        /// <summary>
+        /// 视图或者Window大小改变时
+        /// </summary>
         protected virtual void OnViewResize()
         {
             if (_camera != null)

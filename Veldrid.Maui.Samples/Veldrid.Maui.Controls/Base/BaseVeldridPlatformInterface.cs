@@ -27,6 +27,9 @@ namespace Veldrid.Maui.Controls.Base
             }
         }
 
+        public abstract  bool AutoReDraw { get;  set; }
+        public GraphicsDeviceOptions? Options = null;
+
         public PlatformType PlatformType { get; protected set; }
 
         public event Action<float> Rendering;

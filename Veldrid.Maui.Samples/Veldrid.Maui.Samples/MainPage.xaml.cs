@@ -41,6 +41,7 @@ namespace Veldrid.Maui.Samples
                 }
             };
             var platformView = new VeldridView() { };
+            platformView.AutoReDraw = true;
 #if IOS
             platformView.Backend = GraphicsBackend.OpenGLES;
 #elif ANDROID

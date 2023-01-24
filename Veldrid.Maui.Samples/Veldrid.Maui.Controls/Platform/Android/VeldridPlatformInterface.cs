@@ -1,8 +1,6 @@
 ﻿using Android.Runtime;
 using Android.Views;
-using System.Diagnostics;
 using Veldrid.Maui.Controls.Base;
-using Veldrid.Utilities;
 
 namespace Veldrid.Maui.Controls.Platforms.Android
 {
@@ -10,7 +8,6 @@ namespace Veldrid.Maui.Controls.Platforms.Android
     {
         private VeldridPlatformView _view;
 
-        private readonly GraphicsDeviceOptions _options;
         private readonly GraphicsBackend _backend;
 
         // This is supposed to be a DisposeCollectorResourceFactory but it crashes mono, so change it.
@@ -30,11 +27,6 @@ namespace Veldrid.Maui.Controls.Platforms.Android
                 throw new NotSupportedException($"{backend} is not supported on Android.");
             }
             _backend = backend;
-            bool debug = false;
-#if DEBUG
-            debug = true;
-#endif
-            _options = new GraphicsDeviceOptions(debug, PixelFormat.R16_UNorm, false, ResourceBindingModel.Improved, true, true);
 
             _view = view;
             _view.AndroidSurfaceCreated += CreateGraphicsDevice;
@@ -44,7 +36,6 @@ namespace Veldrid.Maui.Controls.Platforms.Android
 
         private void DestroyGraphicsDevice()
         {
-            _enableRun = false;
             if (_graphicsDevice != null)
             {
                 var tempDevice = _graphicsDevice;
@@ -68,6 +59,9 @@ namespace Veldrid.Maui.Controls.Platforms.Android
 
         private void CreateGraphicsDevice(ISurfaceHolder holder)
         {
+            if (Options == null)
+                Options = new GraphicsDeviceOptions(false, PixelFormat.R16_UNorm, false, ResourceBindingModel.Improved, true, true);
+
             if (_backend == GraphicsBackend.Vulkan)
             {
                 SwapchainSource ss = SwapchainSource.CreateAndroidSurface(holder.Surface.Handle, JNIEnv.Handle);
@@ -75,12 +69,12 @@ namespace Veldrid.Maui.Controls.Platforms.Android
                     ss,
                     (uint)Width,
                     (uint)Height,
-                    _options.SwapchainDepthFormat,
-                    _options.SyncToVerticalBlank);
+                    Options.Value.SwapchainDepthFormat,
+                    Options.Value.SyncToVerticalBlank);
 
                 if (_graphicsDevice == null)
                 {
-                    _graphicsDevice = GraphicsDevice.CreateVulkan(_options, sd);
+                    _graphicsDevice = GraphicsDevice.CreateVulkan(Options.Value, sd);
                 }
 
                 //_swapChain = GraphicsDevice.ResourceFactory.CreateSwapchain(sd);
@@ -93,9 +87,9 @@ namespace Veldrid.Maui.Controls.Platforms.Android
                     ss,
                     (uint)Width,
                     (uint)Height,
-                    _options.SwapchainDepthFormat,
-                    _options.SyncToVerticalBlank);
-                _graphicsDevice = GraphicsDevice.CreateOpenGLES(_options, sd);
+                    Options.Value.SwapchainDepthFormat,
+                    Options.Value.SyncToVerticalBlank);
+                _graphicsDevice = GraphicsDevice.CreateOpenGLES(Options.Value, sd);
                 _swapChain = _graphicsDevice.MainSwapchain;
             }
 
@@ -103,38 +97,41 @@ namespace Veldrid.Maui.Controls.Platforms.Android
             _resources = _graphicsDevice.ResourceFactory;
             InvokeGraphicsDeviceCreated();
 
-            Run();
+            Animator = new ValueAnimator();
+            Animator.set(RenderLoop);
+            if (AutoReDraw == true)
+                Animator.start();
+        }
+
+        ValueAnimator Animator = null;
+        bool autoReDraw = false;
+        public override bool AutoReDraw
+        {
+            set
+            {
+                if (_graphicsDevice != null)//如果图形设备已经创建，那么动画对象已经创建，只需要判断是否开关
+                {
+                    if (value == true)
+                    {
+                        Animator.cancel();
+                        Animator.start();
+                    }
+                    else
+                        Animator.cancel();
+                }
+                autoReDraw = value;
+            }
+
+            get
+            {
+                return autoReDraw;
+            }
         }
 
         private void RenderLoop()
         {
-            if (_graphicsDevice != null) InvokeRendering(frameTime);
+            if (_graphicsDevice != null) InvokeRendering(16);
         }
 
-        bool _enableRun = false;
-        private void Run()
-        {
-            _enableRun = true;
-            Task.Factory.StartNew(() => Loop(), TaskCreationOptions.LongRunning);
-        }
-
-        int frameTime = 1000 / 60;//每秒60帧
-        private void Loop()
-        {
-            while (_enableRun)
-            {
-                try
-                {
-                    Thread.Sleep(frameTime);
-
-                    RenderLoop();
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine("Encountered an error while rendering: " + e);
-                    //throw;
-                }
-            }
-        }
     }
 }

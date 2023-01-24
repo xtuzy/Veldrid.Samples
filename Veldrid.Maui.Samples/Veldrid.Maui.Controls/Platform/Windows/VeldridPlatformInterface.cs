@@ -5,9 +5,8 @@ using Veldrid.Utilities;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Veldrid.Maui.Controls.Base;
-using Veldrid.Maui.Controls.Platforms.Windows;
 
-namespace MauiGPUControl.Platforms.Windows
+namespace Veldrid.Maui.Controls.Platforms.Windows
 {
     public sealed partial class VeldridPlatformInterface :
         BaseVeldridPlatformInterface
@@ -19,8 +18,6 @@ namespace MauiGPUControl.Platforms.Windows
             _view = view;
             _view.CompositionScaleChanged += OnViewScaleChanged;
             _view.SizeChanged += OnViewSizeChanged;
-
-            CompositionTarget.Rendering += RenderLoop;//UI Thread
 
             _view.Loaded += OnLoaded;
             _view.Unloaded += OnUnloaded;
@@ -56,22 +53,50 @@ namespace MauiGPUControl.Platforms.Windows
 
         private void CreateGraphicsDevice()
         {
-            var options = new GraphicsDeviceOptions(false, PixelFormat.R32_Float, true, ResourceBindingModel.Improved);
+            if(Options == null)
+                Options = new GraphicsDeviceOptions(false, PixelFormat.R32_Float, true, ResourceBindingModel.Improved);
             var logicalDpi = 96.0f * _view.CompositionScaleX;
             var renderWidth = _view.RenderSize.Width;
             var renderHeight = _view.RenderSize.Height;
-            _graphicsDevice = GraphicsDevice.CreateD3D11(options, this._view, renderWidth, renderHeight, logicalDpi);
+            _graphicsDevice = GraphicsDevice.CreateD3D11(Options.Value, this._view, renderWidth, renderHeight, logicalDpi);
             _resources = new DisposeCollectorResourceFactory(_graphicsDevice.ResourceFactory);
             _swapChain = _graphicsDevice.MainSwapchain;
             InvokeGraphicsDeviceCreated();
+            Animator = new ValueAnimator();
+            Animator.set(RenderLoop);
+            if (AutoReDraw == true)
+                Animator.start();
+        }
+
+        ValueAnimator Animator = null;
+        bool autoReDraw = false;
+        public override bool AutoReDraw
+        {
+            set
+            {
+                if (_graphicsDevice != null)//如果图形设备已经创建，那么动画对象已经创建，只需要判断是否开关
+                {
+                    if (value == true)
+                    {
+                        Animator.cancel();
+                        Animator.start();
+                    }
+                    else
+                        Animator.cancel();
+                }
+                autoReDraw = value;
+            }
+
+            get
+            {
+                return autoReDraw;
+            }
         }
 
         /// <summary>
         /// View will still run it.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void RenderLoop(object sender, object e)
+        private void RenderLoop()
         {
             if (_graphicsDevice != null)
             {
