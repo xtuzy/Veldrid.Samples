@@ -17,6 +17,8 @@ namespace Veldrid.macOS.Samples
         public override uint Width => (uint)(_view.CorrectedFrame.Width * NSScreen.MainScreen.BackingScaleFactor);
         public override uint Height => (uint)(_view.CorrectedFrame.Height * NSScreen.MainScreen.BackingScaleFactor);
 
+        public override bool AutoReDraw { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         public VeldridPlatformInterface(VeldridPlatformView view, GraphicsBackend backend = GraphicsBackend.Metal)
         {
             PlatformType = PlatformType.Desktop;

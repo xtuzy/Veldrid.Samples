@@ -10,7 +10,7 @@ namespace Veldrid.SDL.Samples
         static void Main(string[] args)
         {
             VeldridPlatformWindow window = new VeldridPlatformWindow();
-            var platformInterface = new VeldridPlatformInterface(window, GraphicsBackend.Direct3D11);
+            var platformInterface = new VeldridPlatformInterface(window, GraphicsBackend.Vulkan);
 
             var camera = new SimpleCamera();
             //platformInterface.Drawable = new Maui.Samples.Core.GettingStarted.GettingStartedDrawable();
@@ -21,7 +21,7 @@ namespace Veldrid.SDL.Samples
             //platformInterface.Drawable = new Maui.Samples.Core.Offscreen.OffscreenApplication(camera);
             //platformInterface.Drawable = new Maui.Samples.Core.TexturedCube.TexturedCubeDrawable();
 
-            //platformInterface.Drawable = new HelloTriangle();
+            platformInterface.Drawable = new HelloTriangle();
             //platformInterface.Drawable = new HelloTriangle_ElementBufferObject();
             //platformInterface.Drawable = new Shaders_InsAndOuts();
             //platformInterface.Drawable = new Shaders_Uniform();
@@ -32,7 +32,7 @@ namespace Veldrid.SDL.Samples
             //platformInterface.Drawable = new Transformations_InPractice();
             //platformInterface.Drawable = new CoordinateSystems_Going3D();
             //platformInterface.Drawable = new CoordinateSystems_More3D();
-            platformInterface.Drawable = new CoordinateSystems_MoreCubes();
+            //platformInterface.Drawable = new CoordinateSystems_MoreCubes();
 
 
             window.Window.Title = platformInterface.Drawable.GetType().Name;

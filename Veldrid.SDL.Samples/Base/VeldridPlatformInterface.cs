@@ -27,6 +27,8 @@ namespace Veldrid.SDL.Samples.Base
         public override uint Width => (uint)(_view.Width * 1);
         public override uint Height => (uint)(_view.Height * 1);
 
+        public override bool AutoReDraw { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         private void OnUnloaded()
         {
             DestroyGraphicsDevice();
