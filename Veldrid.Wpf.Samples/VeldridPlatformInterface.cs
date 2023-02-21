@@ -12,9 +12,15 @@ namespace Veldrid.Wpf.Samples
     {
         public VeldridPlatformView _view;
 
-        public VeldridPlatformInterface(VeldridPlatformView view)
+        private readonly GraphicsBackend _backend;
+
+        public VeldridPlatformInterface(VeldridPlatformView view, GraphicsBackend backend = GraphicsBackend.Direct3D11)
         {
             PlatformType = PlatformType.Desktop;
+
+            if (!(backend == GraphicsBackend.Direct3D11 || backend == GraphicsBackend.Vulkan))
+                throw new NotSupportedException($"Not support {backend} backend.");
+            _backend = backend;
 
             _view = view;
             _view.SizeChanged += OnViewSizeChanged;
@@ -24,6 +30,7 @@ namespace Veldrid.Wpf.Samples
 
         public override uint Width => (uint)(_view.RenderSize.Width * _view.CompositionScaleX);
         public override uint Height => (uint)(_view.RenderSize.Height * _view.CompositionScaleY);
+        public override bool AutoReDraw { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         private void OnUnloaded()
         {
@@ -47,7 +54,11 @@ namespace Veldrid.Wpf.Samples
             SwapchainSource win32Source = SwapchainSource.CreateWin32(_view.NativeHwnd, hinstance);
             SwapchainDescription scDesc = new SwapchainDescription(win32Source, width, height, PixelFormat.R32_Float, true);
 
-            _graphicsDevice = GraphicsDevice.CreateD3D11(new GraphicsDeviceOptions(), scDesc);
+            var Options = new GraphicsDeviceOptions(false, null, false, ResourceBindingModel.Improved, true, true);
+            if (_backend == GraphicsBackend.Direct3D11)
+                _graphicsDevice = GraphicsDevice.CreateD3D11(Options, scDesc);
+            else if (_backend == GraphicsBackend.Vulkan)
+                _graphicsDevice = GraphicsDevice.CreateVulkan(Options, scDesc);
             //_swapChain = _graphicsDevice.ResourceFactory.CreateSwapchain(scDesc);
             _swapChain = _graphicsDevice.MainSwapchain;
 
