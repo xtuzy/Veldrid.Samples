@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net7.0-ios;net6.0-maccatalyst</TargetFrameworks>
+    <TargetFrameworks>net6.0-maccatalyst;net6.0-android;net7.0-ios</TargetFrameworks>
     <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net6.0-windows10.0.19041.0;net6.0-android</TargetFrameworks>
     <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
     <!-- <TargetFrameworks>$(TargetFrameworks);net6.0-tizen</TargetFrameworks> -->
@@ -60,13 +60,12 @@
     <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
     <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework.Contains('ios')) == true">
-    
-    <PackageReference Include="Veldrid.VK.iOSNativeAsset" Version="1.3.235" />
+  <ItemGroup>
+    <PackageReference Include="Veldrid.VK.MauiNativeAsset" Version="1.3.2311" />
   </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Veldrid" Version="4.9.0-beta4" />
-    <PackageReference Include="Vk" Version="1.0.30" />
     <ProjectReference Include="..\Veldrid.Maui.Controls\Veldrid.Maui.Controls.csproj" />
     <ProjectReference Include="..\Veldrid.Maui.Samples.Core\Veldrid.Maui.Samples.Core.csproj" />
   </ItemGroup>

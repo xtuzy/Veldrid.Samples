@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veldrid.Wpf.Samples", "Veld
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veldrid.SDL.Samples", "Veldrid.SDL.Samples\Veldrid.SDL.Samples.csproj", "{38DA08EA-4C77-4383-A561-EF2E0D5257BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfficialVeldrid.SDL.Samples", "OfficialVeldrid.SDL.Samples\OfficialVeldrid.SDL.Samples.csproj", "{3CF68AE0-2FC6-40E3-9885-30DF795C8E5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OfficialVeldrid.SDL.Samples", "OfficialVeldrid.SDL.Samples\OfficialVeldrid.SDL.Samples.csproj", "{3CF68AE0-2FC6-40E3-9885-30DF795C8E5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
