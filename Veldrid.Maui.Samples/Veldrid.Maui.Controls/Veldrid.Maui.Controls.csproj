@@ -19,7 +19,7 @@
   </PropertyGroup>
   
   <PropertyGroup>
-    <Version>4.9.0-beta6</Version>
+    <Version>4.9.0-beta7</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup Condition="$(TargetFramework.Contains('ios')) == false and $(TargetFramework.Contains('mac')) == false">
