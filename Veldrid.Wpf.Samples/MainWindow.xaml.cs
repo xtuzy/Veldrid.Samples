@@ -25,7 +25,7 @@ namespace Veldrid.Wpf.Samples
                 }
             };
             var platformView = new VeldridPlatformView();
-            var platformInterface = new VeldridPlatformInterface(platformView, GraphicsBackend.Vulkan);
+            var platformInterface = new VeldridPlatformInterface(platformView);
             var camera = new Maui.Controls.Base.SimpleCamera();
             foreach (var view in buttonContainer.Children)
             {

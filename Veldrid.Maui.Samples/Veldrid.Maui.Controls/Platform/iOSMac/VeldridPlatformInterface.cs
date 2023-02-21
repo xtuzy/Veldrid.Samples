@@ -21,8 +21,8 @@ namespace Veldrid.Maui.Controls.Platforms.iOS
         {
             PlatformType = PlatformType.Mobile;
 
-            if (!(backend == GraphicsBackend.Direct3D11 || backend == GraphicsBackend.Vulkan))
-                throw new NotSupportedException($"Not support {backend} backend.");
+            if (!(backend == GraphicsBackend.Metal || backend == GraphicsBackend.OpenGLES || backend == GraphicsBackend.Vulkan))
+                throw new NotSupportedException($"Not support {backend} backend on iOS or Maccatalyst.");
             _backend = backend;
 
             _view = view;
