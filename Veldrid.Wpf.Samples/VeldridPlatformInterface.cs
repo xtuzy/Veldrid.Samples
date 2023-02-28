@@ -38,7 +38,7 @@ namespace Veldrid.Wpf.Samples
             DestroyGraphicsDevice();
         }
 
-        private void OnLoaded() => CreateGraphicsDevice();
+        public void OnLoaded() => CreateGraphicsDevice();
 
         /// <summary>
         /// 设备的创建和销毁流程是一次性的, 而设置Drawable是可以多次的
@@ -103,6 +103,12 @@ namespace Veldrid.Wpf.Samples
                 _swapChain.Resize(width, height);
                 InvokeResized();
             }
+        }
+
+        public override void Dispose()
+        {
+            _view = null;
+            base.Dispose();
         }
     }
 }

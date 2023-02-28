@@ -5,7 +5,7 @@ using Veldrid.SPIRV;
 
 namespace Veldrid.Maui.Samples.Core.LearnOpenGL
 {
-    public class HelloTriangle : BaseGpuDrawable
+    public class HelloTriangle : BaseGpuDrawable, IDisposable
     {
         private DeviceBuffer _vertexBuffer;
         private Pipeline _pipeline;
@@ -126,6 +126,17 @@ void main()
             GraphicsDevice?.SubmitCommands(_commandList);
             // Once commands have been submitted, the rendered image can be presented to the application window.
             GraphicsDevice?.SwapBuffers(MainSwapchain);
+            GraphicsDevice?.WaitForIdle();
+        }
+
+        public override void ReleaseResources()
+        {
+            _indexBuffer?.Dispose();
+            _vertexBuffer?.Dispose();
+            _pipeline?.Dispose();
+            _commandList?.Dispose();
+            foreach(var shader in _shaders)
+                shader?.Dispose();
         }
 
         /// <summary>

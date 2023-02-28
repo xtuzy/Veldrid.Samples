@@ -1,8 +1,6 @@
-﻿using System;
-using System.Numerics;
+﻿using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Veldrid;
 using Veldrid.Maui.Controls.AssetPrimitives;
 using Veldrid.Maui.Controls.Base;
 using Veldrid.SPIRV;
@@ -42,7 +40,7 @@ namespace Veldrid.Maui.Samples.Core.Instancing
         private float _localRotation = 0f; // Causes individual rocks to rotate around their centers
         private float _globalRotation = 0f; // Causes rocks to rotate around the global origin (where the planet is)
 
-        public InstancingApplication(BaseCamera camera):base(camera) { }
+        public InstancingApplication(BaseCamera camera) : base(camera) { }
 
         protected override void CreateResources(ResourceFactory factory)
         {
@@ -241,8 +239,8 @@ namespace Veldrid.Maui.Samples.Core.Instancing
                 _commandList.UpdateBuffer(_lightInfoBuffer, 0, new LightInfo(_lightDir, _camera.Position));
             }
 
-            _localRotation += delta/1000 * ((float)Math.PI * 2 / 9);
-            _globalRotation += -delta/1000 * ((float)Math.PI * 2 / 240);
+            _localRotation += delta / 1000 * ((float)Math.PI * 2 / 9);
+            _globalRotation += -delta / 1000 * ((float)Math.PI * 2 / 240);
             _commandList.UpdateBuffer(_rotationInfoBuffer, 0, new Vector4(_localRotation, _globalRotation, 0, 0));
 
             Matrix4x4.Invert(_camera.ProjectionMatrix, out Matrix4x4 inverseProjection);
@@ -302,6 +300,35 @@ namespace Veldrid.Maui.Samples.Core.Instancing
             return ResourceFactory.CreateFromSpirv(
                 new ShaderDescription(ShaderStages.Vertex, ReadEmbeddedAssetBytes(setName + "-vertex.glsl"), "main"),
                 new ShaderDescription(ShaderStages.Fragment, ReadEmbeddedAssetBytes(setName + "-fragment.glsl"), "main"));
+        }
+
+        public override void ReleaseResources()
+        {
+            base.ReleaseResources();
+
+            _commandList?.Dispose();
+
+            // Shared resources
+            _sharedResourceSet?.Dispose();
+            _cameraProjViewBuffer?.Dispose();
+            _lightInfoBuffer?.Dispose();
+
+            // Resources for instanced rocks
+            _instancePipeline?.Dispose();
+            _instanceVB?.Dispose();
+            _instanceTextureSet?.Dispose();
+
+            // Resources for central planet
+            _planetPipeline?.Dispose();
+            _planetTextureSet?.Dispose();
+
+            // Resources for the background starfield
+            _starfieldPipeline?.Dispose();
+            _viewInfoBuffer?.Dispose();
+            _viewInfoSet?.Dispose();
+
+            // Dynamic data
+            _rotationInfoBuffer?.Dispose();
         }
     }
 

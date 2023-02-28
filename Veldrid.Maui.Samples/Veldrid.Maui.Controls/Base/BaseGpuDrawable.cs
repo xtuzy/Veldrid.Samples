@@ -1,9 +1,10 @@
 ﻿using System.Runtime.InteropServices;
 using Veldrid.Maui.Controls.AssetPrimitives;
+using Veldrid.Utilities;
 
 namespace Veldrid.Maui.Controls.Base
 {
-    public abstract class BaseGpuDrawable
+    public abstract class BaseGpuDrawable : IDisposable
     {
         private readonly Dictionary<Type, BinaryAssetSerializer> _serializers = DefaultSerializers.Get();
 
@@ -64,6 +65,7 @@ namespace Veldrid.Maui.Controls.Base
         protected virtual void OnGraphicsDeviceDestroyed()
         {
             //PlatformInterface = null;//直接设置为null在Android中退出到桌面在回来时会出错
+            ReleaseResources();
         }
 
         protected virtual string GetTitle() => GetType().Name;
@@ -73,6 +75,13 @@ namespace Veldrid.Maui.Controls.Base
         /// </summary>
         /// <param name="factory"></param>
         protected abstract void CreateResources(ResourceFactory factory);
+        /// <summary>
+        /// Release object created in <see cref="CreateResources(ResourceFactory)"/>
+        /// </summary>
+        public virtual void ReleaseResources()
+        {
+            (ResourceFactory as DisposeCollectorResourceFactory)?.DisposeCollector?.DisposeAll();
+        }
 
         private void OnRender(float deltaMillisecond)
         {
@@ -163,6 +172,13 @@ namespace Veldrid.Maui.Controls.Base
                 BinaryReader reader = new BinaryReader(stream);
                 return (T)serializer.Read(reader);
             }
+        }
+
+        public virtual void Dispose()
+        {
+            ReleaseResources();
+            GraphicsDevice?.WaitForIdle();//貌似会减少引用数
+            PlatformInterface = null;
         }
     }
 }

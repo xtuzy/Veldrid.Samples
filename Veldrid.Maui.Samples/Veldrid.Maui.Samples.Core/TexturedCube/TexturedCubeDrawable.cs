@@ -141,6 +141,22 @@ namespace Veldrid.Maui.Samples.Core.TexturedCube
             GraphicsDevice.WaitForIdle();
         }
 
+        public override void ReleaseResources()
+        {
+            base.ReleaseResources();
+            _pipeline?.Dispose();
+            _cl?.Dispose();
+            _surfaceTexture?.Dispose();
+            _surfaceTextureView?.Dispose();
+            _worldTextureSet?.Dispose();
+            _indexBuffer?.Dispose();
+            _projectionBuffer?.Dispose();
+            _vertexBuffer?.Dispose();
+            _viewBuffer?.Dispose();
+            _worldBuffer?.Dispose();
+            _projViewSet?.Dispose();
+        }
+
         private static VertexPositionTexture[] GetCubeVertices()
         {
             VertexPositionTexture[] vertices = new VertexPositionTexture[]

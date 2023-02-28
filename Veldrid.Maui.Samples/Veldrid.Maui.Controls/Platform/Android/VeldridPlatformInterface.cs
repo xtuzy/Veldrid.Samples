@@ -1,6 +1,7 @@
 ﻿using Android.Runtime;
 using Android.Views;
 using Veldrid.Maui.Controls.Base;
+using Veldrid.Utilities;
 
 namespace Veldrid.Maui.Controls.Platforms.Android
 {
@@ -93,8 +94,8 @@ namespace Veldrid.Maui.Controls.Platforms.Android
                 _swapChain = _graphicsDevice.MainSwapchain;
             }
 
-            //_resources = new DisposeCollectorResourceFactory(_graphicsDevice.ResourceFactory);
-            _resources = _graphicsDevice.ResourceFactory;
+            _resources = new DisposeCollectorResourceFactory(_graphicsDevice.ResourceFactory);
+            //_resources = _graphicsDevice.ResourceFactory;
             InvokeGraphicsDeviceCreated();
 
             Animator = new ValueAnimator();

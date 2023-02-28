@@ -32,7 +32,7 @@ namespace Veldrid.Maui.Samples.Core.Offscreen
         private ResourceSet _dragonResourceSet;
         private ResourceSet _mirrorResourceSet;
 
-        public OffscreenApplication(BaseCamera camera):base(camera)
+        public OffscreenApplication(BaseCamera camera) : base(camera)
         {
         }
 
@@ -247,6 +247,30 @@ namespace Veldrid.Maui.Samples.Core.Offscreen
             ui.Model = Matrix4x4.CreateTranslation(_dragonPos) * ui.Model;
 
             GraphicsDevice.UpdateBuffer(_uniformBuffers_vsOffScreen, 0, ref ui);
+        }
+
+        public override void ReleaseResources()
+        {
+            base.ReleaseResources();
+
+            _cl?.Dispose();
+            _offscreenFB?.Dispose();
+            _offscreenPipeline?.Dispose();
+            _dragonModel?.Dispose();
+            _planeModel?.Dispose();
+            _colorMap?.Dispose();
+            _colorView?.Dispose();
+            _offscreenColor?.Dispose();
+            _offscreenView?.Dispose();
+            _dragonPipeline?.Dispose();
+            _mirrorPipeline?.Dispose();
+
+            _uniformBuffers_vsShared?.Dispose();
+            _uniformBuffers_vsMirror?.Dispose();
+            _uniformBuffers_vsOffScreen?.Dispose();
+            _offscreenResourceSet?.Dispose();
+            _dragonResourceSet?.Dispose();
+            _mirrorResourceSet?.Dispose();
         }
     }
 }

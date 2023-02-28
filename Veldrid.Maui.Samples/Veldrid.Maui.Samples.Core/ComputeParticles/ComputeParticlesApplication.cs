@@ -1,7 +1,5 @@
-﻿using System;
-using System.Numerics;
+﻿using System.Numerics;
 using System.Runtime.CompilerServices;
-using Veldrid;
 using Veldrid.Maui.Controls.Base;
 using Veldrid.SPIRV;
 
@@ -156,6 +154,22 @@ namespace Veldrid.Maui.Samples.Core.ComputeParticles
 
             GraphicsDevice.SubmitCommands(_cl);
             GraphicsDevice.SwapBuffers(MainSwapchain);
+            GraphicsDevice.WaitForIdle();
+        }
+
+        public override void ReleaseResources()
+        {
+            base.ReleaseResources();
+            _particleBuffer?.Dispose();
+            _screenSizeBuffer?.Dispose();
+            _computeShader?.Dispose();
+            _computePipeline?.Dispose();
+            _graphicsPipeline?.Dispose();
+            _graphicsParticleResourceSet?.Dispose();
+            _cl?.Dispose();
+            _screenSizeResourceSet?.Dispose();
+            _computeScreenSizeResourceSet?.Dispose();
+            _computeResourceSet?.Dispose();
         }
     }
 

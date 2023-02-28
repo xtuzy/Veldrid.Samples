@@ -3,7 +3,7 @@ using Veldrid;
 
 namespace Veldrid.Maui.Controls.Base
 {
-    public abstract class BaseVeldridPlatformInterface
+    public abstract class BaseVeldridPlatformInterface : IDisposable
     {
         BaseGpuDrawable drawable;
         public BaseGpuDrawable Drawable
@@ -43,7 +43,6 @@ namespace Veldrid.Maui.Controls.Base
         public void InvokeGraphicsDeviceDestroyed() => GraphicsDeviceDestroyed?.Invoke();
         public void InvokeResized() => Resized?.Invoke();
 
-
         /// <summary>
         /// Pixel Width
         /// </summary>
@@ -56,5 +55,14 @@ namespace Veldrid.Maui.Controls.Base
         public GraphicsDevice _graphicsDevice { get; protected set; }
         public Swapchain _swapChain { get; protected set; }
         public ResourceFactory _resources { get; protected set;  }
+
+        public virtual void Dispose()
+        {
+            _resources = null;
+            _swapChain?.Dispose();
+            _swapChain = null;
+            _graphicsDevice?.Dispose();
+            _graphicsDevice = null;
+        }
     }
 }

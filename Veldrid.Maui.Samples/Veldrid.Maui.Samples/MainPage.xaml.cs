@@ -66,6 +66,7 @@ namespace Veldrid.Maui.Samples
                     var button = view as Button;
                     button.Clicked += (s, e) =>
                     {
+                        platformView.Drawable?.Dispose();
                         if (button.Text == nameof(Veldrid.Maui.Samples.Core.GettingStarted.GettingStartedDrawable))
                             platformView.Drawable = new Veldrid.Maui.Samples.Core.GettingStarted.GettingStartedDrawable();
                         else if (button.Text == nameof(Veldrid.Maui.Samples.Core.ComputeTexture.ComputeTextureApplication))

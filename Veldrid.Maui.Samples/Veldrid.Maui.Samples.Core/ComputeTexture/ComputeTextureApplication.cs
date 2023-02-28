@@ -182,6 +182,7 @@ namespace Veldrid.Maui.Samples.Core.ComputeTexture
             _cl.End();
             GraphicsDevice.SubmitCommands(_cl);
             GraphicsDevice.SwapBuffers(MainSwapchain);
+            GraphicsDevice.WaitForIdle();
         }
     }
 

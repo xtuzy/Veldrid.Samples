@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Veldrid.Wpf.Samples
@@ -8,6 +10,9 @@ namespace Veldrid.Wpf.Samples
     /// </summary>
     public partial class MainWindow : Window
     {
+        private VeldridPlatformView platformView;
+        private VeldridPlatformInterface platformInterface { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -15,6 +20,8 @@ namespace Veldrid.Wpf.Samples
             {
                 Children =
                 {
+                    new Button(){ Content = "切换Backend到Direct3D11" },
+                    new Button(){ Content = "ReleaseResource" },
                     new Button(){ Content = nameof(Veldrid.Maui.Samples.Core.GettingStarted.GettingStartedDrawable)},
                     new Button(){ Content = nameof(Veldrid.Maui.Samples.Core.ComputeTexture.ComputeTextureApplication)},
                     new Button(){ Content = nameof(Veldrid.Maui.Samples.Core.AnimatedMesh.AnimatedMeshApplication)},
@@ -22,10 +29,16 @@ namespace Veldrid.Wpf.Samples
                     new Button(){ Content = nameof(Veldrid.Maui.Samples.Core.Instancing.InstancingApplication)},
                     new Button(){ Content = nameof(Veldrid.Maui.Samples.Core.Offscreen.OffscreenApplication)},
                     new Button(){ Content = nameof(Veldrid.Maui.Samples.Core.TexturedCube.TexturedCubeDrawable)},
+                    new Button(){ Content = nameof(Veldrid.Maui.Samples.Core.LearnOpenGL.HelloTriangle)},
+                    new Button(){ Content = nameof(Veldrid.Maui.Samples.Core.LearnOpenGL.Textures)},
+                    new Button(){ Content = nameof(Veldrid.Maui.Samples.Core.LearnOpenGL.Textures_TextureUnits)},
                 }
             };
-            var platformView = new VeldridPlatformView();
-            var platformInterface = new VeldridPlatformInterface(platformView, GraphicsBackend.Vulkan);
+            Vk.VkDeviceMemoryManagerCustomOption.MinDedicatedAllocationSizeDynamic = 1024 * 1024 * 1;
+            Vk.VkDeviceMemoryManagerCustomOption.PersistentMappedChunkSize = 1024 * 1024 * 8;
+            platformView = new VeldridPlatformView();
+            platformInterface = new VeldridPlatformInterface(platformView, GraphicsBackend.Vulkan);
+
             var camera = new Maui.Controls.Base.SimpleCamera();
             foreach (var view in buttonContainer.Children)
             {
@@ -34,6 +47,8 @@ namespace Veldrid.Wpf.Samples
                     var button = view as Button;
                     button.Click += (s, e) =>
                     {
+                        platformInterface.Drawable?.Dispose();
+                        Debug.WriteLine("已经释放Drawable");
                         if (button.Content == nameof(Veldrid.Maui.Samples.Core.GettingStarted.GettingStartedDrawable))
                             platformInterface.Drawable = new Veldrid.Maui.Samples.Core.GettingStarted.GettingStartedDrawable();
                         else if (button.Content == nameof(Veldrid.Maui.Samples.Core.ComputeTexture.ComputeTextureApplication))
@@ -48,6 +63,29 @@ namespace Veldrid.Wpf.Samples
                             platformInterface.Drawable = new Veldrid.Maui.Samples.Core.Offscreen.OffscreenApplication(camera);
                         else if (button.Content == nameof(Veldrid.Maui.Samples.Core.TexturedCube.TexturedCubeDrawable))
                             platformInterface.Drawable = new Veldrid.Maui.Samples.Core.TexturedCube.TexturedCubeDrawable();
+                        else if (button.Content == nameof(Veldrid.Maui.Samples.Core.LearnOpenGL.HelloTriangle))
+                            platformInterface.Drawable = new Veldrid.Maui.Samples.Core.LearnOpenGL.HelloTriangle();
+                        else if (button.Content == nameof(Veldrid.Maui.Samples.Core.LearnOpenGL.Textures))
+                            platformInterface.Drawable = new Veldrid.Maui.Samples.Core.LearnOpenGL.Textures();
+                        else if (button.Content == nameof(Veldrid.Maui.Samples.Core.LearnOpenGL.Textures_TextureUnits))
+                            platformInterface.Drawable = new Veldrid.Maui.Samples.Core.LearnOpenGL.Textures_TextureUnits();
+                        else if (button.Content == "ReleaseResource")
+                            ;
+                        else if ((button.Content as string).Contains("Backend"))
+                        {
+                            platformInterface?.Dispose();
+                            if ((button.Content as string).Contains("Direct3D11"))
+                            {
+                                platformInterface = new VeldridPlatformInterface(platformView, GraphicsBackend.Direct3D11);
+                                button.Content = "切换Backend到Vulkan";
+                            }
+                            else
+                            {
+                                platformInterface = new VeldridPlatformInterface(platformView, GraphicsBackend.Vulkan);
+                                button.Content = "切换Backend到Direct3D11";
+                            }
+                            platformInterface.OnLoaded();
+                        }
                     };
                 }
             }

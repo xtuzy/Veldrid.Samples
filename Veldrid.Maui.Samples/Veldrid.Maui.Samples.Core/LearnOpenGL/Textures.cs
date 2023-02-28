@@ -1,14 +1,12 @@
 ﻿using System.Numerics;
 using System.Text;
-using Veldrid;
 using Veldrid.Maui.Controls.AssetPrimitives;
-using Veldrid.Maui.Controls.AssetProcessor;
 using Veldrid.Maui.Controls.Base;
 using Veldrid.SPIRV;
 
 namespace Veldrid.Maui.Samples.Core.LearnOpenGL
 {
-    public class Textures : BaseGpuDrawable
+    public class Textures : BaseGpuDrawable, IDisposable
     {
         private DeviceBuffer _vertexBuffer;
         private Pipeline _pipeline;
@@ -155,6 +153,22 @@ void main()
             GraphicsDevice?.SubmitCommands(_commandList);
             // Once commands have been submitted, the rendered image can be presented to the application window.
             GraphicsDevice?.SwapBuffers(MainSwapchain);
+            GraphicsDevice?.WaitForIdle();
         }
+
+        public override void ReleaseResources()
+        {
+            _indexBuffer?.Dispose();
+            _vertexBuffer?.Dispose();
+            _pipeline?.Dispose();
+            _commandList?.Dispose();
+            if (_shaders != null)
+                foreach (var shader in _shaders)
+                    shader?.Dispose();
+            _surfaceTexture?.Dispose();
+            _surfaceTextureView?.Dispose();
+            _textureSet?.Dispose();
+        }
+
     }
 }

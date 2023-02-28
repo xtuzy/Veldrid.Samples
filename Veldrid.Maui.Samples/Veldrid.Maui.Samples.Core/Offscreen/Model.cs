@@ -6,7 +6,7 @@ using Veldrid;
 
 namespace Veldrid.Maui.Samples.Core.Offscreen
 {
-    public class Model
+    public class Model: IDisposable
     {
         private const PostProcessSteps DefaultPostProcessSteps =
             PostProcessSteps.FlipWindingOrder | PostProcessSteps.Triangulate | PostProcessSteps.PreTransformVertices
@@ -163,6 +163,12 @@ namespace Veldrid.Maui.Samples.Core.Offscreen
 
             gd.UpdateBuffer(VertexBuffer, 0, ref vertices[0], vBufferSize);
             gd.UpdateBuffer(IndexBuffer, 0, ref indices[0], iBufferSize);
+        }
+
+        public void Dispose()
+        {
+            VertexBuffer?.Dispose();
+            IndexBuffer?.Dispose();
         }
 
         public struct ModelPart

@@ -1,9 +1,7 @@
 ﻿using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
-using Veldrid;
 using Veldrid.Maui.Controls.AssetPrimitives;
-using Veldrid.Maui.Controls.AssetProcessor;
 using Veldrid.Maui.Controls.Base;
 using Veldrid.SPIRV;
 
@@ -126,7 +124,7 @@ void main()
             //texture1 = new ImageProcessor().ProcessT(this.ReadEmbedAssetStream("LearnOpenGL.Assets.Images.container.jpg"), ".jpg");
             texture1 = LoadEmbeddedAsset<ProcessedTexture>(this.ReadEmbedAssetPath("ProcessedImages.container.binary"));
             _surfaceTexture1 = texture1.CreateDeviceTexture(GraphicsDevice, ResourceFactory, TextureUsage.Sampled);
-            _surfaceTextureView1 = factory.CreateTextureView(_surfaceTexture1); 
+            _surfaceTextureView1 = factory.CreateTextureView(_surfaceTexture1);
             //texture2 = new ImageProcessor().ProcessT(this.ReadEmbedAssetStream("LearnOpenGL.Assets.Images.awesomeface.png"), ".png");
             texture2 = LoadEmbeddedAsset<ProcessedTexture>(this.ReadEmbedAssetPath("ProcessedImages.awesomeface.binary"));
             _surfaceTexture2 = texture2.CreateDeviceTexture(GraphicsDevice, ResourceFactory, TextureUsage.Sampled);
@@ -190,6 +188,23 @@ void main()
             GraphicsDevice?.SubmitCommands(_commandList);
             // Once commands have been submitted, the rendered image can be presented to the application window.
             GraphicsDevice?.SwapBuffers(MainSwapchain);
+            GraphicsDevice?.WaitForIdle();
+        }
+
+        public override void ReleaseResources()
+        {
+            base.ReleaseResources();
+            _vertexBuffer?.Dispose();
+            _pipeline?.Dispose();
+            _commandList?.Dispose();
+            _textureSet?.Dispose();
+            foreach (var shader in _shaders)
+                shader?.Dispose();
+            _indexBuffer?.Dispose();
+            _surfaceTexture1?.Dispose();
+            _surfaceTextureView1?.Dispose();
+            _surfaceTexture2?.Dispose();
+            _surfaceTextureView2.Dispose();
         }
     }
 }
