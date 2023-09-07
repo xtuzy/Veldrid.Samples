@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -10,5 +10,9 @@
     <PackageReference Include="Veldrid.SDL2" Version="4.8.0" />
     <PackageReference Include="Veldrid.StartupUtilities" Version="4.8.0" />
     <PackageReference Include="Veldrid.SPIRV" Version="1.0.16" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Veldrid.Maui.Samples\Veldrid.Maui.Controls\Veldrid.Maui.Controls.csproj" />
+    <ProjectReference Include="..\Veldrid.Maui.Samples\Veldrid.Maui.Samples.Core\Veldrid.Maui.Samples.Core.csproj" />
   </ItemGroup>
 </Project>

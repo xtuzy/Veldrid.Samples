@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
@@ -44,6 +44,6 @@
     <PackageReference Include="Veldrid.StartupUtilities" Version="4.8.0" />
     <PackageReference Include="Veldrid.Utilities" Version="4.8.0" />
     <PackageReference Include="Veldrid.SPIRV" Version="1.0.15" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.4" Condition="$(TargetFramework.Contains('windows')) == true or $(TargetFramework) == 'net6.0'" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.4" Condition="$(TargetFramework.Contains('windows')) == true or $(TargetFramework) == 'net7.0'" />
   </ItemGroup>
 </Project>
