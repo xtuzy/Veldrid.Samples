@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -32,13 +31,14 @@ namespace Veldrid.Wpf.Samples
                     new Button(){ Content = nameof(Veldrid.Maui.Samples.Core.LearnOpenGL.HelloTriangle)},
                     new Button(){ Content = nameof(Veldrid.Maui.Samples.Core.LearnOpenGL.Textures)},
                     new Button(){ Content = nameof(Veldrid.Maui.Samples.Core.LearnOpenGL.Textures_TextureUnits)},
+                    new Button(){ Content = nameof(Veldrid.Maui.Samples.Core.Headless.HeaderlessTextures)},
                 }
             };
             Vk.VkDeviceMemoryManagerCustomOption.MinDedicatedAllocationSizeDynamic = 1024 * 1024 * 1;
             Vk.VkDeviceMemoryManagerCustomOption.PersistentMappedChunkSize = 1024 * 1024 * 8;
             platformView = new VeldridPlatformView();
             platformInterface = new VeldridPlatformInterface(platformView, GraphicsBackend.Vulkan);
-
+            
             var camera = new Maui.Controls.Base.SimpleCamera();
             foreach (var view in buttonContainer.Children)
             {
@@ -47,7 +47,7 @@ namespace Veldrid.Wpf.Samples
                     var button = view as Button;
                     button.Click += (s, e) =>
                     {
-                        platformInterface.Drawable?.Dispose();
+                        platformInterface?.Drawable?.Dispose();
                         Debug.WriteLine("已经释放Drawable");
                         if (button.Content == nameof(Veldrid.Maui.Samples.Core.GettingStarted.GettingStartedDrawable))
                             platformInterface.Drawable = new Veldrid.Maui.Samples.Core.GettingStarted.GettingStartedDrawable();
@@ -86,6 +86,10 @@ namespace Veldrid.Wpf.Samples
                             }
                             platformInterface.OnLoaded();
                         }
+                        else if (button.Content == nameof(Veldrid.Maui.Samples.Core.Headless.HeaderlessTextures))
+                        {
+                            var headerless = new Veldrid.Maui.Samples.Core.Headless.HeaderlessTextures();
+                        }
                     };
                 }
             }
@@ -94,6 +98,8 @@ namespace Veldrid.Wpf.Samples
             layout.Children.Add(platformView);
             Grid.SetRow(buttonContainer, 0);
             Grid.SetRow(platformView, 1);
+
+            //Maui.Samples.Core.RenderDocCapture.Init();
         }
     }
 }

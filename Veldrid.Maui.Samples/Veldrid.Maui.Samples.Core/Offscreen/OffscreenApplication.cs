@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿using SkiaSharp;
+using System.Numerics;
+using System.Runtime.InteropServices;
 using Veldrid.Maui.Controls.AssetPrimitives;
 using Veldrid.Maui.Controls.Base;
 using Veldrid.SPIRV;
@@ -18,6 +20,7 @@ namespace Veldrid.Maui.Samples.Core.Offscreen
         private Texture _colorMap;
         private TextureView _colorView;
         private Texture _offscreenColor;
+        private Texture _offscreenReadOut;
         private TextureView _offscreenView;
         private VertexLayoutDescription _vertexLayout;
         private Pipeline _dragonPipeline;
@@ -81,6 +84,8 @@ namespace Veldrid.Maui.Samples.Core.Offscreen
                     PixelFormat.BC3_UNorm);
             }
             _colorView = factory.CreateTextureView(_colorMap);
+
+            _offscreenReadOut = factory.CreateTexture(TextureDescription.Texture2D((uint)OffscreenWidth, (uint)OffscreenHeight, 1, 1, PixelFormat.R8_G8_B8_A8_UNorm, TextureUsage.Staging));
 
             _offscreenColor = factory.CreateTexture(TextureDescription.Texture2D(
                 OffscreenWidth, OffscreenHeight, 1, 1,
@@ -187,6 +192,30 @@ namespace Veldrid.Maui.Samples.Core.Offscreen
             _cl.SetVertexBuffer(0, _dragonModel.VertexBuffer);
             _cl.SetIndexBuffer(_dragonModel.IndexBuffer, IndexFormat.UInt32);
             _cl.DrawIndexed(_dragonModel.IndexCount, 1, 0, 0, 0);
+            //SaveFrameBuffer();
+        }
+
+        void SaveFrameBuffer()
+        {
+            if (!OperatingSystem.IsWindows())
+                return;
+            _cl.CopyTexture(_offscreenFB.ColorTargets[0].Target, _offscreenReadOut);
+            MappedResourceView<byte> view = GraphicsDevice.Map<byte>(_offscreenReadOut, MapMode.Read);
+
+            byte[] tmp = new byte[view.SizeInBytes];
+
+            Marshal.Copy(view.MappedResource.Data, tmp, 0, (int)view.SizeInBytes);
+
+            GraphicsDevice.Unmap(_offscreenReadOut);
+
+            var flipVertical = true;// GraphicsDevice.BackendType == GraphicsBackend.Vulkan;
+            using SKImage img = SKImage.FromPixelCopy(new SKImageInfo((int)_offscreenReadOut.Width, (int)_offscreenReadOut.Height, SKColorType.Rgba8888), tmp);
+            using SKBitmap bmp = new SKBitmap(img.Width, img.Height);
+            using SKCanvas surface = new SKCanvas(bmp);
+            surface.Scale(1, flipVertical ? -1 : 1, 0, flipVertical ? img.Height / 2f : 0);
+            surface.DrawImage(img, 0, 0);
+            var imageData = SKImage.FromBitmap(bmp).Encode(SKEncodedImageFormat.Png, 99).ToArray();
+            File.WriteAllBytes(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "offscreenResult.png"), imageData);
         }
 
         private void DrawMain()

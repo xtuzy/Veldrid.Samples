@@ -1,13 +1,36 @@
-﻿using System.Numerics;
+﻿using SkiaSharp;
+using System.Numerics;
+using System.Runtime.InteropServices;
 using System.Text;
 using Veldrid.Maui.Controls.AssetPrimitives;
 using Veldrid.Maui.Controls.Base;
 using Veldrid.SPIRV;
 
-namespace Veldrid.Maui.Samples.Core.LearnOpenGL
+namespace Veldrid.Maui.Samples.Core.Headless
 {
-    public class Textures : BaseGpuDrawable, IDisposable
+    public class HeaderlessTextures : //BaseGpuDrawable, 
+        IDisposable
     {
+        public HeaderlessTextures()
+        {
+            GraphicsDevice = HeaderlessGraphicsDevice.InitDesk();
+            ResourceFactory = GraphicsDevice.ResourceFactory;
+            CreateResources(ResourceFactory);
+            RenderDocCapture.StartCapture();
+            var data = Draw(16);
+            RenderDocCapture.EndCapture();
+            SaveRgba32ToPng(data);//see output path, generate headerlessResult.png
+
+        }
+
+        GraphicsDevice GraphicsDevice;
+        ResourceFactory ResourceFactory;
+        int Width = 500;
+        int Height = 500;
+        Texture _offscreenReadOut;
+        Texture _offscreenColor;
+        Framebuffer _offscreenFB;
+
         private DeviceBuffer _vertexBuffer;
         private Pipeline _pipeline;
         private CommandList _commandList;
@@ -19,7 +42,7 @@ namespace Veldrid.Maui.Samples.Core.LearnOpenGL
         private Texture _surfaceTexture;
         private TextureView _surfaceTextureView;
 
-        protected unsafe override void CreateResources(ResourceFactory factory)
+        protected unsafe void CreateResources(ResourceFactory factory)
         {
             //vertices data of a quad
             Vector3[] quadVertices = new Vector3[]
@@ -103,6 +126,12 @@ void main()
                    );
 
             // create GraphicsPipeline
+            _offscreenReadOut = factory.CreateTexture(TextureDescription.Texture2D((uint)Width, (uint)Height, 1, 1, PixelFormat.R32_G32_B32_A32_Float, TextureUsage.Staging));
+
+            _offscreenColor = factory.CreateTexture(TextureDescription.Texture2D((uint)Width, (uint)Height, 1, 1, PixelFormat.R32_G32_B32_A32_Float, TextureUsage.RenderTarget));
+
+            _offscreenFB = factory.CreateFramebuffer(new FramebufferDescription(null, _offscreenColor));
+
             GraphicsPipelineDescription pipelineDescription = new GraphicsPipelineDescription();
             pipelineDescription.BlendState = BlendStateDescription.SingleOverrideBlend;
             pipelineDescription.DepthStencilState = DepthStencilStateDescription.Disabled;
@@ -117,7 +146,7 @@ void main()
             pipelineDescription.ShaderSet = new ShaderSetDescription(
                 vertexLayouts: new VertexLayoutDescription[] { vertexLayout },
                 shaders: _shaders);
-            pipelineDescription.Outputs = MainSwapchain.Framebuffer.OutputDescription;
+            pipelineDescription.Outputs = _offscreenFB.OutputDescription;
 
             _pipeline = factory.CreateGraphicsPipeline(pipelineDescription);
             // create CommandList
@@ -129,13 +158,13 @@ void main()
                GraphicsDevice.LinearSampler));
         }
 
-        protected override void Draw(float deltaSeconds)
+        protected byte[] Draw(float deltaSeconds)
         {
-            RenderDocCapture.StartCapture();
             // Begin() must be called before commands can be issued.
             _commandList.Begin();
 
-            _commandList.SetFramebuffer(MainSwapchain.Framebuffer);
+            _commandList.SetFramebuffer(_offscreenFB);
+            _commandList.SetFullViewports();
             _commandList.ClearColorTarget(0, RgbaFloat.Black);
 
             _commandList.SetVertexBuffer(0, _vertexBuffer);
@@ -149,16 +178,27 @@ void main()
                 vertexOffset: 0,
                 instanceStart: 0);
 
+            //transfer GPU drawing to CPU readable one
+            _commandList.CopyTexture(_offscreenFB.ColorTargets[0].Target, _offscreenReadOut);
+
             // End() must be called before commands can be submitted for execution.
             _commandList.End();
             GraphicsDevice?.SubmitCommands(_commandList);
             // Once commands have been submitted, the rendered image can be presented to the application window.
-            GraphicsDevice?.SwapBuffers(MainSwapchain);
-            RenderDocCapture.EndCapture();
+            //GraphicsDevice?.SwapBuffers(MainSwapchain);
             GraphicsDevice?.WaitForIdle();
+            MappedResourceView<byte> view = GraphicsDevice.Map<byte>(_offscreenReadOut, MapMode.Read);
+
+            byte[] tmp = new byte[view.SizeInBytes];
+
+            Marshal.Copy(view.MappedResource.Data, tmp, 0, (int)view.SizeInBytes);
+
+            GraphicsDevice.Unmap(_offscreenReadOut);
+
+            return tmp;
         }
 
-        public override void ReleaseResources()
+        public void Dispose()
         {
             _indexBuffer?.Dispose();
             _vertexBuffer?.Dispose();
@@ -172,5 +212,75 @@ void main()
             _textureSet?.Dispose();
         }
 
+        void SaveRgba32ToPng(byte[] bytes)
+        {
+            var flipVertical =  GraphicsDevice.BackendType == GraphicsBackend.Vulkan;
+            using SKImage img = SKImage.FromPixelCopy(new SKImageInfo(Width, Height, SKColorType.RgbaF32), bytes);
+            using SKBitmap bmp = new SKBitmap(img.Width, img.Height);
+            using SKCanvas surface = new SKCanvas(bmp);
+            surface.Scale(1, flipVertical ? -1 : 1,  0, flipVertical ? Height / 2f : 0);
+            surface.DrawImage(img, 0, 0);
+            var imageData = SKImage.FromBitmap(bmp).Encode(SKEncodedImageFormat.Png, 99).ToArray();
+            File.WriteAllBytes(Path.Combine( AppDomain.CurrentDomain.BaseDirectory, "headerlessResult.png"), imageData);
+        }
+
+        #region Load resource
+        public Stream OpenEmbeddedAssetStream(string name) => GetType().Assembly.GetManifestResourceStream(name);
+
+        public Shader LoadShader(ResourceFactory factory, string set, ShaderStages stage, string entryPoint)
+        {
+            string name = $"{set}-{stage.ToString().ToLower()}.{GetExtension(factory.BackendType)}";
+            return factory.CreateShader(new ShaderDescription(stage, ReadEmbeddedAssetBytes(name), entryPoint));
+        }
+
+        public byte[] ReadEmbeddedAssetBytes(string name)
+        {
+            using (Stream stream = OpenEmbeddedAssetStream(name))
+            {
+                byte[] bytes = new byte[stream.Length];
+                using (MemoryStream ms = new MemoryStream(bytes))
+                {
+                    stream.CopyTo(ms);
+                    return bytes;
+                }
+            }
+        }
+
+        private static string GetExtension(GraphicsBackend backendType)
+        {
+            bool isMacOS = RuntimeInformation.OSDescription.Contains("Darwin");
+
+            return (backendType == GraphicsBackend.Direct3D11)
+                ? "hlsl.bytes"
+                : (backendType == GraphicsBackend.Vulkan)
+                    ? "450.glsl.spv"
+                    : (backendType == GraphicsBackend.Metal)
+                        ? isMacOS ? "metallib" : "ios.metallib"
+                        : (backendType == GraphicsBackend.OpenGL)
+                            ? "330.glsl"
+                            : "300.glsles";
+        }
+
+        private readonly Dictionary<Type, BinaryAssetSerializer> _serializers = DefaultSerializers.Get();
+
+        public T LoadEmbeddedAsset<T>(string name)
+        {
+            if (!_serializers.TryGetValue(typeof(T), out BinaryAssetSerializer serializer))
+            {
+                throw new InvalidOperationException("No serializer registered for type " + typeof(T).Name);
+            }
+
+            using (Stream stream = GetType().Assembly.GetManifestResourceStream(name))
+            {
+                if (stream == null)
+                {
+                    throw new InvalidOperationException("No embedded asset with the name " + name);
+                }
+
+                BinaryReader reader = new BinaryReader(stream);
+                return (T)serializer.Read(reader);
+            }
+        }
+        #endregion
     }
 }
