@@ -215,7 +215,7 @@ void main()
         void SaveRgba32ToPng(byte[] bytes)
         {
             var flipVertical =  GraphicsDevice.BackendType == GraphicsBackend.Vulkan;
-            using SKImage img = SKImage.FromPixelCopy(new SKImageInfo(Width, Height, SKColorType.RgbaF32), bytes);
+            using SKImage img = SKImage.FromPixelCopy(new SKImageInfo(bytes.Length / 16 / Height, Height, SKColorType.RgbaF32), bytes);
             using SKBitmap bmp = new SKBitmap(img.Width, img.Height);
             using SKCanvas surface = new SKCanvas(bmp);
             surface.Scale(1, flipVertical ? -1 : 1,  0, flipVertical ? Height / 2f : 0);
