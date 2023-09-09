@@ -14,7 +14,7 @@ namespace Veldrid.SDL.Samples
             Maui.Samples.Core.RenderDocCapture.Init();
             var camera = new SimpleCamera();
             //platformInterface.Drawable = new Maui.Samples.Core.GettingStarted.GettingStartedDrawable();
-            platformInterface.Drawable = new Maui.Samples.Core.ComputeTexture.ComputeTextureApplication();
+            //platformInterface.Drawable = new Maui.Samples.Core.ComputeTexture.ComputeTextureApplication();
             //platformInterface.Drawable = new Maui.Samples.Core.AnimatedMesh.AnimatedMeshApplication(camera);
             //platformInterface.Drawable = new Maui.Samples.Core.ComputeParticles.ComputeParticlesApplication();
             //platformInterface.Drawable = new Maui.Samples.Core.Instancing.InstancingApplication(camera);
@@ -34,8 +34,8 @@ namespace Veldrid.SDL.Samples
             //platformInterface.Drawable = new CoordinateSystems_More3D();
             //platformInterface.Drawable = new CoordinateSystems_MoreCubes();
             var head = new Maui.Samples.Core.Headless.HeadlessHelloTriangle();
-
-            window.Window.Title = platformInterface.Drawable.GetType().Name;
+            if(platformInterface.Drawable != null)
+                window.Window.Title = platformInterface.Drawable.GetType().Name;
             while (window.Window.Exists)
             {
                 window.Window.PumpEvents();

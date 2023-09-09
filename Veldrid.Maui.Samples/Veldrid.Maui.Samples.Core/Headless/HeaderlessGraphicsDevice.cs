@@ -92,11 +92,11 @@ namespace Veldrid.Maui.Samples.Core.Headless
             {
                 if (OperatingSystem.IsWindows())
                 {
-                    /*if (GraphicsDevice.IsBackendSupported(GraphicsBackend.Direct3D11))
+                    if (GraphicsDevice.IsBackendSupported(GraphicsBackend.Direct3D11))
                     {
                         GraphicsDevice = InitFromD3D11();//bug
                     }
-                    else*/ if (GraphicsDevice.IsBackendSupported(GraphicsBackend.Vulkan))
+                    else if (GraphicsDevice.IsBackendSupported(GraphicsBackend.Vulkan))
                     {
                         GraphicsDevice = InitFromVulkan();//winui3 can use it if headless
                     }
