@@ -13,7 +13,7 @@ namespace Veldrid.Maui.Samples.Core.Headless
     {
         public HeaderlessTextures()
         {
-            GraphicsDevice = HeaderlessGraphicsDevice.InitDesk();
+            GraphicsDevice = HeaderlessGraphicsDevice.Init();
             ResourceFactory = GraphicsDevice.ResourceFactory;
             CreateResources(ResourceFactory);
             RenderDocCapture.StartCapture();

@@ -37,6 +37,7 @@ namespace Veldrid.Maui.Samples
                     new Button(){ Text = nameof(Veldrid.Maui.Samples.Core.LearnOpenGL.CoordinateSystems_MoreCubes) },
                     new Button(){ Text = nameof(Veldrid.Maui.Samples.Core.LearnOpenGL.Camera_LookAt) },
                     new Button(){ Text = nameof(Veldrid.Maui.Samples.Core.LearnOpenGL.Camera_WalkAround) },
+                    new Button(){ Text = nameof(Veldrid.Maui.Samples.Core.Headless.HeadlessHelloTriangle) },
                     new Button(){ Text = "Remove"},
                 }
             };
@@ -110,11 +111,11 @@ namespace Veldrid.Maui.Samples
                         else if (button.Text == nameof(Veldrid.Maui.Samples.Core.LearnOpenGL.Camera_WalkAround))
                         {
                             var d = new Veldrid.Maui.Samples.Core.LearnOpenGL.Camera_WalkAround();
-                            SwipeGestureRecognizer upSwipeGesture = new SwipeGestureRecognizer { Direction = SwipeDirection.Up};
-                            SwipeGestureRecognizer downSwipeGesture = new SwipeGestureRecognizer { Direction = SwipeDirection.Down};
-                            SwipeGestureRecognizer leftSwipeGesture = new SwipeGestureRecognizer { Direction = SwipeDirection.Left};
-                            SwipeGestureRecognizer rightSwipeGesture = new SwipeGestureRecognizer { Direction = SwipeDirection.Right};
-                            
+                            SwipeGestureRecognizer upSwipeGesture = new SwipeGestureRecognizer { Direction = SwipeDirection.Up };
+                            SwipeGestureRecognizer downSwipeGesture = new SwipeGestureRecognizer { Direction = SwipeDirection.Down };
+                            SwipeGestureRecognizer leftSwipeGesture = new SwipeGestureRecognizer { Direction = SwipeDirection.Left };
+                            SwipeGestureRecognizer rightSwipeGesture = new SwipeGestureRecognizer { Direction = SwipeDirection.Right };
+
                             var action = (object? sender, SwipedEventArgs e) =>
                             {
                                 switch (e.Direction)
@@ -145,6 +146,10 @@ namespace Veldrid.Maui.Samples
                         }
                         else if (button.Text == "Remove")
                             platformView.Drawable = null;
+                        else if (button.Text == nameof(Veldrid.Maui.Samples.Core.Headless.HeadlessHelloTriangle))
+                        {
+                            var headless = new Veldrid.Maui.Samples.Core.Headless.HeadlessHelloTriangle();
+                        }
                     };
                 }
             }

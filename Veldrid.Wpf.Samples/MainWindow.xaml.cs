@@ -32,12 +32,13 @@ namespace Veldrid.Wpf.Samples
                     new Button(){ Content = nameof(Veldrid.Maui.Samples.Core.LearnOpenGL.Textures)},
                     new Button(){ Content = nameof(Veldrid.Maui.Samples.Core.LearnOpenGL.Textures_TextureUnits)},
                     new Button(){ Content = nameof(Veldrid.Maui.Samples.Core.Headless.HeaderlessTextures)},
+                    new Button(){ Content = nameof(Veldrid.Maui.Samples.Core.Headless.HeadlessHelloTriangle)},
                 }
             };
             Vk.VkDeviceMemoryManagerCustomOption.MinDedicatedAllocationSizeDynamic = 1024 * 1024 * 1;
             Vk.VkDeviceMemoryManagerCustomOption.PersistentMappedChunkSize = 1024 * 1024 * 8;
-            platformView = new VeldridPlatformView();
-            platformInterface = new VeldridPlatformInterface(platformView, GraphicsBackend.Vulkan);
+            platformView = new VeldridPlatformView() { Width = 500, Height = 500 };
+            //platformInterface = new VeldridPlatformInterface(platformView, GraphicsBackend.Direct3D11);
             
             var camera = new Maui.Controls.Base.SimpleCamera();
             foreach (var view in buttonContainer.Children)
@@ -90,6 +91,10 @@ namespace Veldrid.Wpf.Samples
                         {
                             var headerless = new Veldrid.Maui.Samples.Core.Headless.HeaderlessTextures();
                         }
+                        else if (button.Content == nameof(Veldrid.Maui.Samples.Core.Headless.HeadlessHelloTriangle))
+                        {
+                            var headerless = new Veldrid.Maui.Samples.Core.Headless.HeadlessHelloTriangle();
+                        }
                     };
                 }
             }
@@ -99,7 +104,7 @@ namespace Veldrid.Wpf.Samples
             Grid.SetRow(buttonContainer, 0);
             Grid.SetRow(platformView, 1);
 
-            //Maui.Samples.Core.RenderDocCapture.Init();
+            Maui.Samples.Core.RenderDocCapture.Init();
         }
     }
 }

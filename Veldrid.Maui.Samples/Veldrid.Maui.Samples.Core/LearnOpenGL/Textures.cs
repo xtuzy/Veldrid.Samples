@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.Diagnostics;
+using System.Numerics;
 using System.Text;
 using Veldrid.Maui.Controls.AssetPrimitives;
 using Veldrid.Maui.Controls.Base;
@@ -18,6 +19,11 @@ namespace Veldrid.Maui.Samples.Core.LearnOpenGL
         private ProcessedTexture texture;
         private Texture _surfaceTexture;
         private TextureView _surfaceTextureView;
+
+        public Textures() : base()
+        {
+            RenderDocCapture.Init();
+        }
 
         protected unsafe override void CreateResources(ResourceFactory factory)
         {
@@ -131,6 +137,7 @@ void main()
 
         protected override void Draw(float deltaSeconds)
         {
+            Debug.Assert(true);
             RenderDocCapture.StartCapture();
             // Begin() must be called before commands can be issued.
             _commandList.Begin();
@@ -154,8 +161,9 @@ void main()
             GraphicsDevice?.SubmitCommands(_commandList);
             // Once commands have been submitted, the rendered image can be presented to the application window.
             GraphicsDevice?.SwapBuffers(MainSwapchain);
-            RenderDocCapture.EndCapture();
+            
             GraphicsDevice?.WaitForIdle();
+            RenderDocCapture.EndCapture();
         }
 
         public override void ReleaseResources()

@@ -11,17 +11,17 @@ namespace Veldrid.SDL.Samples
         {
             VeldridPlatformWindow window = new VeldridPlatformWindow();
             var platformInterface = new VeldridPlatformInterface(window, GraphicsBackend.Vulkan);
-
+            Maui.Samples.Core.RenderDocCapture.Init();
             var camera = new SimpleCamera();
             //platformInterface.Drawable = new Maui.Samples.Core.GettingStarted.GettingStartedDrawable();
-            //platformInterface.Drawable = new Maui.Samples.Core.ComputeTexture.ComputeTextureApplication();
+            platformInterface.Drawable = new Maui.Samples.Core.ComputeTexture.ComputeTextureApplication();
             //platformInterface.Drawable = new Maui.Samples.Core.AnimatedMesh.AnimatedMeshApplication(camera);
             //platformInterface.Drawable = new Maui.Samples.Core.ComputeParticles.ComputeParticlesApplication();
             //platformInterface.Drawable = new Maui.Samples.Core.Instancing.InstancingApplication(camera);
             //platformInterface.Drawable = new Maui.Samples.Core.Offscreen.OffscreenApplication(camera);
             //platformInterface.Drawable = new Maui.Samples.Core.TexturedCube.TexturedCubeDrawable();
 
-            platformInterface.Drawable = new HelloTriangle();
+            //platformInterface.Drawable = new HelloTriangle();
             //platformInterface.Drawable = new HelloTriangle_ElementBufferObject();
             //platformInterface.Drawable = new Shaders_InsAndOuts();
             //platformInterface.Drawable = new Shaders_Uniform();
@@ -33,7 +33,7 @@ namespace Veldrid.SDL.Samples
             //platformInterface.Drawable = new CoordinateSystems_Going3D();
             //platformInterface.Drawable = new CoordinateSystems_More3D();
             //platformInterface.Drawable = new CoordinateSystems_MoreCubes();
-
+            var head = new Maui.Samples.Core.Headless.HeadlessHelloTriangle();
 
             window.Window.Title = platformInterface.Drawable.GetType().Name;
             while (window.Window.Exists)
