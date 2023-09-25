@@ -1,8 +1,8 @@
 # Veldrid.Samples
-This project convert [veldrid-samples](https://github.com/mellinoe/veldrid-samples) and  [Veldrid.Views ](https://github.com/PhilippeMonteil/Veldrid.Views) to net6.0, show how to use Veldrid in Maui, WPF, dotnet6.0-macOS, it provide a VeldridView let you can use Gpu draw 3D graphics in Maui.
+This project convert [veldrid-samples](https://github.com/mellinoe/veldrid-samples) and  [Veldrid.Views ](https://github.com/PhilippeMonteil/Veldrid.Views) to net6.0, show how to use Veldrid in Maui, WPF, dotnet6.0-macOS, it use a [VeldridView](https://github.com/xtuzy/Veldrid.Maui.Controls) let you can use Gpu draw 3D graphics in Maui.
 
-# Guide
-See [wiki](https://github.com/xtuzy/Veldrid.Samples/wiki)
+# Notice
+VeldridView be moved to https://github.com/xtuzy/Veldrid.Maui.Controls
 
 # Demo screenshot
 Windows(D3D11):
